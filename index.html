@@ -1,0 +1,1330 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta property="og:title" content="iSiri Architecture + Design">
+<meta property="og:description" content="Architecture, interiors, landscape and product design studio in Bengaluru, since 2004.">
+<meta property="og:image" content="img/brick-bloom/render-perspective.jpg">
+<link rel="icon" href="img/logo.png">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
+<title>iSiri Architecture + Design</title>
+<meta name="description" content="iSiri Architecture + Design is a multidisciplinary design practice in Bengaluru, founded by Ar Soumya HR in 2004.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Poppins:wght@500;600&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Layout: an architect's sheet — framed corner-bracket titles over a faint site-contour ground, photos set like plates, one olive circle as the only colour. */
+:root{
+  --paper:#F7F7F3; --sheet:#FFFFFF; --ink:#171714; --mute:#67675F; --rule:#D6D6CC; --contour:rgba(23,23,20,.075);
+  --olive:#B7B226; --olive-ink:#6B680E; --brick:#A5573B; --drafting:#FBFBF8; --draft-grid:rgba(23,23,20,.05); --on-olive:#171714; --shade:rgba(10,10,8,.55);
+  --f-display:"Jost","Century Gothic","Futura",system-ui,sans-serif;
+  --f-body:"Figtree","Segoe UI",system-ui,sans-serif;
+  --f-mark:"Poppins","Jost",system-ui,sans-serif;
+  --gut:max(16px, env(safe-area-inset-left, 0px));
+  --gutR:max(16px, env(safe-area-inset-right, 0px));
+  --max:1240px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#11110F; --sheet:#1A1A17; --ink:#ECECE4; --mute:#A2A296; --rule:#33332D; --contour:rgba(236,236,228,.07);
+  --olive:#C4BF32; --olive-ink:#D3CE4F; --brick:#C9734F; --on-olive:#11110F; --shade:rgba(0,0,0,.6); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#11110F; --sheet:#1A1A17; --ink:#ECECE4; --mute:#A2A296; --rule:#33332D; --contour:rgba(236,236,228,.07);
+  --olive:#C4BF32; --olive-ink:#D3CE4F; --brick:#C9734F; --on-olive:#11110F; --shade:rgba(0,0,0,.6); color-scheme:dark}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.65 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--paper)}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--olive);outline-offset:3px}
+.wrap{max-width:var(--max);margin:0 auto;padding-left:var(--gut);padding-right:var(--gutR)}
+h1,h2,h3{font-family:var(--f-display);font-weight:500;text-wrap:balance;margin:0}
+p{margin:0}
+.eyebrow{font:500 12px/1 var(--f-display);letter-spacing:.32em;text-transform:uppercase;color:var(--mute)}
+.contour{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+
+/* Wordmark (rebuilt from the logo so it reads in both themes) */
+.mark{display:inline-flex;flex-direction:column;align-items:center;gap:2px;text-decoration:none;line-height:1}
+.mark .w{display:flex;align-items:center;gap:.62em;font:500 25px/1 var(--f-mark);letter-spacing:0}
+.mark .s{width:1.62em;height:1.62em;border-radius:50%;background:var(--olive);color:var(--on-olive);display:grid;place-items:center;font-weight:600;margin:0 -.1em}
+.mark .t{font:600 7.4px/1 var(--f-mark);letter-spacing:.26em;color:var(--mute);margin-top:2px;margin-right:-.26em}
+
+/* Header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .3s}
+header.top.scrolled{border-bottom-color:var(--rule)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:74px;gap:16px}
+.top nav.quick{display:flex;gap:30px;font:400 13px/1 var(--f-display);letter-spacing:.2em;text-transform:uppercase}
+.top nav.quick a{text-decoration:none;padding:6px 0;border-bottom:1px solid transparent}
+.top nav.quick a:hover{border-bottom-color:var(--olive)}
+.menu-btn{display:flex;align-items:center;gap:12px;font:500 12px/1 var(--f-display);letter-spacing:.3em;text-transform:uppercase;padding:10px 0}
+.menu-btn .bars{width:26px;display:grid;gap:6px}
+.menu-btn .bars i{height:1.5px;background:var(--ink);display:block}
+.menu-btn .bars i:last-child{width:60%;justify-self:end}
+@media (max-width:860px){.top nav.quick{display:none}}
+
+/* Layered menu */
+.overlay{position:fixed;inset:0;z-index:80;background:var(--paper);display:grid;grid-template-columns:1fr 1fr;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+.overlay.open{opacity:1;visibility:visible}
+.overlay .pane{position:relative;overflow:hidden;padding:calc(28px + env(safe-area-inset-top,0px)) var(--gutR) calc(28px + env(safe-area-inset-bottom,0px)) var(--gut);display:flex;flex-direction:column}
+.overlay .side{background:var(--sheet);border-left:1px solid var(--rule);display:flex;align-items:flex-end}
+.overlay .side img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92;transition:opacity .4s}
+.overlay .side .cap{position:relative;z-index:1;background:var(--paper);padding:14px 18px;margin:0 0 6px;font:400 13px/1.4 var(--f-display);letter-spacing:.12em;text-transform:uppercase}
+.ov-head{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
+.close{font:500 12px/1 var(--f-display);letter-spacing:.3em;text-transform:uppercase;display:flex;gap:12px;align-items:center;padding:10px 0}
+.close span.x{width:22px;height:22px;position:relative}
+.close span.x::before,.close span.x::after{content:"";position:absolute;left:0;right:0;top:50%;height:1.5px;background:var(--ink);transform:rotate(45deg)}
+.close span.x::after{transform:rotate(-45deg)}
+.levels{position:relative;flex:1;margin-top:40px;z-index:1}
+.level{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:4px;transition:transform .45s cubic-bezier(.2,.7,.2,1),opacity .35s}
+.level[aria-hidden="true"]{opacity:0;pointer-events:none;transform:translateX(40px)}
+.level.behind{transform:translateX(-40px)}
+.level a,.level button.go{display:flex;align-items:baseline;gap:18px;text-align:left;text-decoration:none;font:300 clamp(30px,5vw,54px)/1.2 var(--f-display);letter-spacing:.02em;padding:6px 0;width:fit-content}
+.level a small,.level button.go small{font:400 12px/1 var(--f-display);letter-spacing:.24em;color:var(--mute);text-transform:uppercase}
+.level a:hover,.level button.go:hover{color:var(--olive-ink)}
+.level .back{font:500 12px/1 var(--f-display);letter-spacing:.28em;text-transform:uppercase;color:var(--mute);margin-bottom:22px;width:fit-content;padding:8px 0}
+.level .back:hover{color:var(--ink)}
+.level.sub a{font-size:clamp(24px,3.6vw,38px)}
+.ov-foot{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:8px 28px;font:400 13px/1.5 var(--f-body);color:var(--mute)}
+@media (max-width:860px){.overlay{grid-template-columns:1fr}.overlay .side{display:none}}
+
+/* Hero slider */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--rule)}
+.hero .wrap{position:relative;z-index:1}
+.slides{position:relative;display:grid}
+.slide{grid-area:1/1;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,5vw,72px);align-items:center;padding-block:clamp(32px,6vw,72px);opacity:0;visibility:hidden;transition:opacity .7s,visibility .7s}
+.slide.on{opacity:1;visibility:visible}
+.slide .txt{display:flex;flex-direction:column;gap:22px;min-width:0}
+.frame{position:relative;padding:22px 26px 24px}
+.frame::before{content:"";position:absolute;left:0;top:0;width:min(100%,360px);height:100%;border:1.5px solid var(--mute);border-right:0;pointer-events:none}
+.frame::after{content:"";position:absolute;left:0;top:0;width:min(100%,420px);border-top:1.5px solid var(--mute)}
+.frame.r::before{left:auto;right:0;border-right:1.5px solid var(--mute);border-left:0}
+.frame.r::after{left:auto;right:0}
+.slide h1,.slide .h1{font:500 clamp(30px,4.4vw,56px)/1.08 var(--f-display);letter-spacing:.12em;text-transform:uppercase}
+.slide .lede{font:300 clamp(17px,1.6vw,20px)/1.55 var(--f-display);letter-spacing:.04em;color:var(--mute);max-width:34ch}
+.slide .pic{position:relative;aspect-ratio:4/3;max-width:100%;overflow:hidden;background:var(--sheet)}
+.slide .pic img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform 6s ease-out}
+.slide.on .pic img{transform:scale(1)}
+.slide .pic::after{content:attr(data-tag);position:absolute;left:0;bottom:0;background:var(--paper);padding:10px 16px;font:500 11px/1 var(--f-display);letter-spacing:.28em;text-transform:uppercase}
+.btn{display:inline-flex;align-items:center;gap:14px;font:500 12px/1 var(--f-display);letter-spacing:.28em;text-transform:uppercase;text-decoration:none;padding:15px 22px;border:1.5px solid var(--ink);width:fit-content;transition:background .25s,color .25s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn .arr{width:22px;height:1.5px;background:currentColor;position:relative}
+.btn .arr::after{content:"";position:absolute;right:0;top:-3.5px;width:8px;height:8px;border-top:1.5px solid currentColor;border-right:1.5px solid currentColor;transform:rotate(45deg)}
+.hero-ctrl{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:0 28px;flex-wrap:wrap}
+.dots{display:flex;gap:6px;flex-wrap:wrap}
+.dots button{font:500 11px/1 var(--f-display);letter-spacing:.2em;text-transform:uppercase;color:var(--mute);padding:10px 10px 10px 0;display:flex;align-items:center;gap:8px}
+.dots button::before{content:"";width:18px;height:1.5px;background:var(--rule);transition:width .3s,background .3s}
+.dots button[aria-current="true"]{color:var(--ink)}
+.dots button[aria-current="true"]::before{width:36px;background:var(--olive)}
+.arrows{display:flex;gap:10px}
+.arrows button{width:46px;height:46px;border:1.5px solid var(--rule);display:grid;place-items:center;transition:border-color .2s}
+.arrows button:hover{border-color:var(--ink)}
+.chev{width:10px;height:10px;border-top:1.5px solid var(--ink);border-left:1.5px solid var(--ink);transform:rotate(-45deg);margin-left:4px}
+.chev.n{transform:rotate(135deg);margin:0 4px 0 0}
+@media (max-width:860px){
+  .slide{grid-template-columns:1fr;gap:22px}
+  .slide .pic{order:-1}
+  .dots button span{display:none}
+}
+
+/* Sections */
+section{position:relative}
+.band{padding-block:clamp(64px,9vw,120px)}
+.band.alt{background:var(--sheet);border-block:1px solid var(--rule)}
+.title{font:500 clamp(28px,3.6vw,44px)/1.1 var(--f-display);letter-spacing:.14em;text-transform:uppercase}
+.title-wrap{display:inline-block}
+.head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:clamp(36px,5vw,60px)}
+.head-row p{max-width:52ch;color:var(--mute)}
+strong{font-weight:600;color:var(--ink)}
+
+/* Studio */
+.studio-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(32px,6vw,90px);align-items:start;position:relative;z-index:1}
+.studio-grid .copy{display:flex;flex-direction:column;gap:20px;font-size:17px;letter-spacing:.01em}
+.studio-grid .copy p{max-width:62ch}
+.stats{display:grid;gap:0;border-top:1.5px solid var(--ink)}
+.stat{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:22px 0;border-bottom:1px solid var(--rule)}
+.stat b{font:300 clamp(40px,5vw,60px)/1 var(--f-display);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.stat span{font:500 12px/1.4 var(--f-display);letter-spacing:.24em;text-transform:uppercase;color:var(--mute);text-align:right}
+.quote{font:300 italic 17px/1.6 var(--f-display);letter-spacing:.08em;color:var(--mute);max-width:44ch}
+.quote cite{display:block;font-style:normal;font-size:13px;letter-spacing:.2em;margin-top:8px}
+.studio-pics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:clamp(40px,6vw,72px);position:relative;z-index:1}
+.studio-pics img{width:100%;aspect-ratio:4/3;object-fit:cover}
+@media (max-width:860px){.studio-grid{grid-template-columns:1fr}.studio-pics{grid-template-columns:1fr 1fr}.studio-pics img:last-child{display:none}}
+
+/* Services */
+.services{display:grid;border-top:1.5px solid var(--ink)}
+.svc{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,6fr) 150px;gap:clamp(18px,3vw,48px);align-items:center;padding:26px 0;border-bottom:1px solid var(--rule);transition:background .3s}
+.svc h3{font:400 clamp(20px,2.2vw,26px)/1.25 var(--f-display);letter-spacing:.06em}
+.svc p{color:var(--mute);min-width:0}
+.svc img{width:150px;aspect-ratio:4/3;object-fit:cover;filter:grayscale(1);transition:filter .4s}
+.svc:hover img,.svc.flash img{filter:none}
+.svc.flash{background:color-mix(in srgb,var(--olive) 12%,transparent)}
+.svc .tag{display:block;font:500 11px/1 var(--f-display);letter-spacing:.26em;text-transform:uppercase;color:var(--olive-ink);margin-bottom:10px}
+@media (max-width:760px){.svc{grid-template-columns:1fr}.svc img{width:100%;aspect-ratio:16/9;order:-1}}
+
+/* Process */
+.process{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;counter-reset:step;position:relative;z-index:1}
+.step{padding:28px 24px 30px 0;border-top:1.5px solid var(--ink);display:flex;flex-direction:column;gap:16px;position:relative}
+.step + .step{padding-left:24px;border-left:1px solid var(--rule)}
+.step .n{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--sheet);border:1px solid var(--rule);font:400 20px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.step:last-child .n{background:var(--olive);color:var(--on-olive);border-color:var(--olive)}
+.step h3{font:400 19px/1.35 var(--f-display);letter-spacing:.04em}
+.step p{color:var(--mute);font-size:15px}
+.massing{width:100%;height:46px;display:block}
+@media (max-width:900px){.process{grid-template-columns:1fr 1fr}.step:nth-child(3){padding-left:0;border-left:0}}
+@media (max-width:520px){.process{grid-template-columns:1fr}.step,.step + .step{padding-left:0;border-left:0}}
+
+/* Portfolio */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.filters button{font:500 12px/1 var(--f-display);letter-spacing:.2em;text-transform:uppercase;padding:12px 16px;border:1px solid var(--rule);transition:all .2s}
+.filters button:hover{border-color:var(--ink)}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.filters button sup{font-size:10px;color:var(--mute);margin-left:4px;letter-spacing:0}
+.filters button[aria-pressed="true"] sup{color:var(--olive)}
+.grid{columns:3 280px;column-gap:14px}
+.tile{break-inside:avoid;margin:0 0 14px;position:relative;display:block;width:100%;overflow:hidden;background:var(--sheet);text-align:left}
+.tile img{width:100%;height:auto;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.tile:hover img{transform:scale(1.04)}
+.tile .lbl{position:absolute;left:0;bottom:0;right:0;padding:28px 14px 12px;background:linear-gradient(transparent,var(--shade));color:#fff;font:500 11px/1.3 var(--f-display);letter-spacing:.22em;text-transform:uppercase;opacity:0;transition:opacity .3s}
+.tile:hover .lbl,.tile:focus-visible .lbl{opacity:1}
+@media (hover:none){.tile .lbl{opacity:1}}
+.more{display:flex;justify-content:center;margin-top:26px}
+
+/* Lightbox */
+.lb{position:fixed;inset:0;z-index:90;background:rgba(12,12,10,.94);display:grid;grid-template-rows:auto 1fr auto;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;color:#EEEEE6}
+.lb.open{opacity:1;visibility:visible}
+.lb-top,.lb-bot{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:calc(14px + env(safe-area-inset-top,0px)) var(--gutR) 14px var(--gut);font:500 12px/1 var(--f-display);letter-spacing:.24em;text-transform:uppercase}
+.lb-bot{padding:14px var(--gutR) calc(16px + env(safe-area-inset-bottom,0px)) var(--gut);justify-content:center;gap:12px}
+.lb-stage{display:grid;place-items:center;min-height:0;padding:0 var(--gutR) 0 var(--gut)}
+.lb-stage img{max-height:100%;max-width:100%;object-fit:contain}
+.lb button{color:#EEEEE6}
+.lb .close span.x::before,.lb .close span.x::after{background:#EEEEE6}
+.lb .arrows button{border-color:rgba(238,238,230,.3)}
+.lb .chev{border-color:#EEEEE6}
+.lb .count{font-variant-numeric:tabular-nums;color:#A9A99E}
+
+/* Founder */
+.founder{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(32px,6vw,90px);align-items:center;position:relative;z-index:1}
+.founder .ph{position:relative;max-width:360px;width:100%;justify-self:center}
+.founder .ph img{width:100%;aspect-ratio:1;border-radius:50%;object-fit:cover;border:1.5px solid var(--ink)}
+.founder .ph::after{content:"";position:absolute;width:34%;aspect-ratio:1;border-radius:50%;background:var(--olive);right:-4%;bottom:2%;z-index:-1}
+.founder .copy{display:flex;flex-direction:column;gap:18px;font-size:17px}
+.founder .copy p{max-width:62ch}
+.founder .belief{font:400 clamp(20px,2.2vw,26px)/1.4 var(--f-display);letter-spacing:.04em;border-left:3px solid var(--olive);padding-left:20px;max-width:30ch}
+@media (max-width:860px){.founder{grid-template-columns:1fr}.founder .ph{max-width:260px}}
+
+/* Team */
+.team{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:22px 16px}
+.member{display:flex;flex-direction:column;gap:10px}
+.member img{width:100%;aspect-ratio:1;object-fit:cover;filter:grayscale(1) contrast(1.02);transition:filter .4s}
+.member span{font:500 12px/1 var(--f-display);letter-spacing:.24em;text-transform:uppercase}
+.team-intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,5vw,72px);margin-bottom:48px;align-items:center}
+.team-intro img{width:100%;aspect-ratio:3/2;object-fit:cover}
+.team-intro p{font-size:17px;max-width:56ch}
+@media (max-width:760px){.team-intro{grid-template-columns:1fr}.team{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Testimonials */
+.testi{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,5vw,80px);align-items:center}
+.testi .pic img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.quotes{display:grid}
+.q{grid-area:1/1;opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s;display:flex;flex-direction:column;gap:22px}
+.q.on{opacity:1;visibility:visible}
+.q blockquote{margin:0;font:300 clamp(19px,2vw,24px)/1.55 var(--f-display);letter-spacing:.02em}
+.q blockquote::before{content:"“";display:block;font:400 64px/0.6 var(--f-display);color:var(--olive);margin-bottom:14px}
+.q .who b{display:block;font:500 15px/1.3 var(--f-display);letter-spacing:.14em;text-transform:uppercase}
+.q .who span{font-size:14px;color:var(--mute)}
+.stars{color:var(--olive-ink);letter-spacing:.2em;font-size:13px}
+.q-ctrl{display:flex;align-items:center;gap:16px;margin-top:30px;flex-wrap:wrap}
+.q-ctrl .count{font:500 12px/1 var(--f-display);letter-spacing:.2em;color:var(--mute);font-variant-numeric:tabular-nums}
+@media (max-width:860px){.testi{grid-template-columns:1fr}.testi .pic img{aspect-ratio:16/10}}
+
+.prod-band{padding-block:clamp(48px,6vw,72px);border-top:1px solid var(--rule)}
+.prod-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px 32px;flex-wrap:wrap;margin-bottom:24px}
+.prod-head p{max-width:46ch;color:var(--mute);font-size:15px}
+.prod-title{font:400 clamp(20px,2vw,24px)/1.2 var(--f-display);letter-spacing:.14em;text-transform:uppercase;margin-top:10px}
+.prod-row{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;scrollbar-width:thin}
+.prod{flex:0 0 auto;width:188px;scroll-snap-align:start;text-align:left;display:flex;flex-direction:column;gap:6px}
+.prod .pimg{display:block;aspect-ratio:4/5;background:var(--sheet);border:1px solid var(--rule);overflow:hidden}
+.prod .pimg img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.prod:hover .pimg img{transform:scale(1.05)}
+.prod .pnm{font:500 12px/1.3 var(--f-display);letter-spacing:.16em;text-transform:uppercase;margin-top:6px}
+.prod .pds{font-size:13px;line-height:1.45;color:var(--mute)}
+.prod .psw{display:flex;gap:4px;margin-top:2px}
+.prod .psw i{width:12px;height:12px;border-radius:50%;display:block;border:1px solid var(--rule)}
+/* Contact */
+.contact{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,6vw,90px);position:relative;z-index:1}
+.info{display:flex;flex-direction:column;gap:26px}
+.info .row{display:grid;grid-template-columns:22px minmax(0,1fr);gap:16px;align-items:start}
+.info svg{width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:1.6;margin-top:3px}
+.info .v{font:400 15px/1.6 var(--f-display);letter-spacing:.1em;text-transform:uppercase;overflow-wrap:anywhere}
+.info .v.lc{text-transform:none;letter-spacing:.06em}
+.copy-btn{font:500 11px/1 var(--f-display);letter-spacing:.2em;text-transform:uppercase;color:var(--olive-ink);padding:8px 0 0}
+.info a.map{font:500 12px/1 var(--f-display);letter-spacing:.22em;text-transform:uppercase;color:var(--olive-ink)}
+form{display:grid;grid-template-columns:1fr 1fr;gap:18px 20px;background:var(--sheet);border:1px solid var(--rule);padding:clamp(22px,3vw,36px)}
+form .full{grid-column:1/-1}
+label{display:flex;flex-direction:column;gap:8px;font:500 11px/1 var(--f-display);letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+input,select,textarea{font:400 16px/1.4 var(--f-body);color:var(--ink);background:var(--paper);border:1px solid var(--rule);padding:13px 14px;border-radius:0;width:100%;letter-spacing:0;text-transform:none}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
+textarea{min-height:120px;resize:vertical}
+.chk{flex-direction:row;align-items:flex-start;gap:10px;text-transform:none;letter-spacing:.02em;font:400 13px/1.5 var(--f-body)}
+.chk input{width:auto;margin-top:3px;accent-color:var(--olive)}
+form .btn{border-color:var(--ink)}
+.form-msg{font:400 14px/1.5 var(--f-body);color:var(--olive-ink)}
+.form-msg.err{color:#B4432E}
+@media (max-width:860px){.contact{grid-template-columns:1fr}}
+@media (max-width:520px){form{grid-template-columns:1fr}}
+
+/* Footer */
+footer{border-top:1px solid var(--rule);padding-block:40px calc(40px + env(safe-area-inset-bottom,0px))}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+footer .disc{font:500 11px/1.6 var(--f-display);letter-spacing:.3em;text-transform:uppercase;color:var(--mute)}
+footer small{color:var(--mute);font-size:13px}
+/* Featured projects index */
+.plist{border-top:1.5px solid var(--ink);position:relative;z-index:1}
+.prow{display:grid;grid-template-columns:70px minmax(0,1fr) minmax(0,.9fr) 220px;gap:clamp(14px,3vw,40px);align-items:center;padding:26px 0;border-bottom:1px solid var(--rule);width:100%;text-align:left;position:relative}
+.prow .no{font:300 15px/1 var(--f-display);letter-spacing:.14em;color:var(--mute);font-variant-numeric:tabular-nums}
+.prow .nm{font:400 clamp(28px,4.2vw,54px)/1 var(--f-display);letter-spacing:.08em;text-transform:uppercase;transition:letter-spacing .5s cubic-bezier(.2,.7,.2,1),color .3s}
+.prow .meta{display:flex;flex-direction:column;gap:6px;font:400 13px/1.3 var(--f-display);letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+.prow .th{aspect-ratio:4/3;overflow:hidden;background:var(--sheet);clip-path:inset(0 0 0 100%);transition:clip-path .6s cubic-bezier(.2,.7,.2,1)}
+.prow .th img{width:100%;height:100%;object-fit:cover}
+.prow:hover .nm,.prow:focus-visible .nm{letter-spacing:.16em;color:var(--olive-ink)}
+.prow:hover .th,.prow:focus-visible .th{clip-path:inset(0 0 0 0)}
+@media (hover:none){.prow .th{clip-path:none}}
+.prow.soon{pointer-events:none}
+.prow.soon .nm{color:var(--rule)}
+@media (max-width:760px){.prow{grid-template-columns:44px minmax(0,1fr)}.prow .meta{grid-column:2}.prow .th{grid-column:1/-1;clip-path:none;order:-1}}
+
+/* Project profile view */
+.pv{position:fixed;inset:0;z-index:70;background:var(--paper);overflow-y:auto;overflow-x:hidden;opacity:0;visibility:hidden;transition:opacity .45s,visibility .45s;overscroll-behavior:contain}
+.pv.open{opacity:1;visibility:visible}
+.pv-bar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);padding-top:env(safe-area-inset-top,0px)}
+.pv-bar .wrap{display:flex;justify-content:space-between;align-items:center;height:64px;gap:16px}
+.pv-bar .crumb{font:500 12px/1 var(--f-display);letter-spacing:.28em;text-transform:uppercase;color:var(--mute);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.pv-bar .crumb b{color:var(--ink);font-weight:500}
+.pv-prog{position:absolute;left:0;bottom:-1px;height:2px;background:var(--olive);width:0}
+.pv-cover{position:relative;overflow:hidden;border-bottom:1px solid var(--rule)}
+.pv-cover .wrap{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:clamp(28px,5vw,72px);padding-block:clamp(36px,6vw,80px);align-items:end}
+.pv-kick{display:flex;gap:14px;align-items:center;font:500 12px/1 var(--f-display);letter-spacing:.3em;text-transform:uppercase;color:var(--mute)}
+.pv-kick i{width:12px;height:12px;border-radius:50%;background:var(--olive);display:block}
+.pv-name{font:400 clamp(34px,5.4vw,92px)/.98 var(--f-display);letter-spacing:.06em;text-transform:uppercase;margin:22px 0 24px}
+.pv-name .wd{display:inline-block;white-space:nowrap}
+.pv-name span{display:inline-block;opacity:0;transform:translateY(.4em);transition:opacity .6s,transform .8s cubic-bezier(.2,.7,.2,1)}
+.pv.open .pv-name span{opacity:1;transform:none}
+.pv-lede{font:300 italic clamp(17px,1.7vw,21px)/1.55 var(--f-display);letter-spacing:.04em;color:var(--mute);max-width:40ch}
+.pv-hero{position:relative;aspect-ratio:1/1;max-height:640px;width:100%;overflow:hidden;clip-path:inset(100% 0 0 0);transition:clip-path 1.1s cubic-bezier(.7,0,.2,1) .15s}
+.pv.open .pv-hero{clip-path:inset(0 0 0 0)}
+.pv-hero img{width:100%;height:100%;object-fit:cover;transform:scale(1.15);transition:transform 2.2s cubic-bezier(.2,.7,.2,1) .2s}
+.pv.open .pv-hero img{transform:scale(1)}
+/* Title block: the corner stamp of an architectural drawing sheet */
+.tblock{margin-top:34px;border:1.5px solid var(--ink);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));background:var(--sheet)}
+.tblock div{padding:12px 14px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);min-width:0}
+.tblock div:nth-child(3n){border-right:0}
+.tblock div:nth-last-child(-n+3){border-bottom:0}
+.tblock dt{font:500 10px/1 var(--f-display);letter-spacing:.26em;text-transform:uppercase;color:var(--mute);margin-bottom:8px}
+.tblock dd{margin:0;font:400 15px/1.3 var(--f-display);letter-spacing:.06em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+@media (max-width:900px){.pv-cover .wrap{grid-template-columns:1fr}.pv-hero{aspect-ratio:4/3;order:-1}}
+@media (max-width:520px){.tblock{grid-template-columns:1fr 1fr}.tblock div{border-right:1px solid var(--rule)!important;border-bottom:1px solid var(--rule)!important}.tblock div:nth-child(2n){border-right:0!important}.tblock div:nth-last-child(-n+2){border-bottom:0!important}}
+
+.pv-body{display:grid;grid-template-columns:200px minmax(0,1fr);gap:clamp(24px,5vw,72px);padding-block:clamp(48px,7vw,96px)}
+.chapters{position:sticky;top:96px;align-self:start;display:flex;flex-direction:column;gap:4px}
+.chapters a{display:flex;gap:14px;align-items:center;text-decoration:none;font:500 12px/1 var(--f-display);letter-spacing:.24em;text-transform:uppercase;color:var(--mute);padding:10px 0;transition:color .3s}
+.chapters a b{font-weight:400;font-variant-numeric:tabular-nums;width:22px}
+.chapters a::after{content:"";height:1.5px;width:0;background:var(--olive);transition:width .4s}
+.chapters a.on{color:var(--ink)}
+.chapters a.on::after{width:28px}
+@media (max-width:900px){.pv-body{grid-template-columns:1fr}.chapters{position:static;flex-direction:row;flex-wrap:wrap;gap:4px 18px;border-bottom:1px solid var(--rule);padding-bottom:8px}.chapters a::after{display:none}}
+.chap{padding-bottom:clamp(64px,9vw,120px);display:flex;flex-direction:column;gap:clamp(28px,4vw,48px);scroll-margin-top:90px}
+.chap-h{display:flex;align-items:baseline;gap:20px;border-top:1.5px solid var(--ink);padding-top:18px}
+.chap-h b{font:300 15px/1 var(--f-display);letter-spacing:.14em;color:var(--mute);font-variant-numeric:tabular-nums}
+.chap-h h2{font:500 clamp(22px,2.6vw,32px)/1.1 var(--f-display);letter-spacing:.16em;text-transform:uppercase}
+.prose{font-size:17px;line-height:1.75;max-width:60ch;display:flex;flex-direction:column;gap:16px}
+.duo{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(20px,3vw,40px);align-items:center}
+.duo.flip{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
+.duo.flip .ph{order:2}
+.duo .ph{overflow:hidden;cursor:zoom-in}
+.duo .ph img{width:100%;height:auto;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.duo .ph:hover img{transform:scale(1.03)}
+.cap-s{font:500 11px/1.4 var(--f-display);letter-spacing:.24em;text-transform:uppercase;color:var(--mute);margin-top:10px}
+.pull{font:300 clamp(22px,3vw,36px)/1.35 var(--f-display);letter-spacing:.03em;max-width:28ch;border-left:3px solid var(--olive);padding-left:22px}
+@media (max-width:760px){.duo,.duo.flip{grid-template-columns:1fr}.duo.flip .ph{order:0}}
+.rv{opacity:1;transform:none;transition:opacity .8s,transform .9s cubic-bezier(.2,.7,.2,1)}
+.rv.pre{opacity:0;transform:translateY(28px)}
+
+.trip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.trip.n4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:700px){.trip.n4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.trip figure{margin:0;overflow:hidden;cursor:zoom-in}
+.trip img{width:100%;aspect-ratio:2/3;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.trip figure:hover img{transform:scale(1.04)}
+@media (max-width:520px){.trip{gap:8px}.trip .cap-s{font-size:9px;letter-spacing:.14em}}
+.rooms-nav .kp{margin:22px 0 0;border:1px solid var(--rule);background:var(--drafting);padding:10px}
+.rooms-nav .kp img{width:100%;height:auto;transition:opacity .2s}
+.rooms-nav .kp .cap-s{color:#67675F}
+@media (max-width:900px){.rooms-nav .kp{display:none}}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.chip{width:78px;background:var(--sheet);border:1px solid var(--rule);padding:6px 6px 8px;display:flex;flex-direction:column;gap:8px}
+.chip span{display:block;aspect-ratio:1;width:100%}
+.chip code{font:500 10px/1 var(--f-display);letter-spacing:.08em;color:var(--mute)}
+.room-pics{display:grid;gap:14px}
+.room-pics.n2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.room-pics.n3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.room-pics.n1{grid-template-columns:minmax(0,1fr)}
+.room-pics figure{margin:0;overflow:hidden;cursor:zoom-in}
+.room-pics img{width:100%;height:clamp(220px,28vw,360px);object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.room-pics figure:hover img{transform:scale(1.04)}
+@media (max-width:600px){.room-pics.n3{grid-template-columns:1fr 1fr}.room-pics.n3 figure:first-child{grid-column:1/-1}}
+.tour{list-style:none;margin:0;padding:0;border-top:1.5px solid var(--ink)}
+.tour a{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid var(--rule);text-decoration:none}
+.tour b{font:300 14px/1 var(--f-display);color:var(--mute);font-variant-numeric:tabular-nums}
+.tour span{font:400 clamp(18px,2vw,24px)/1.2 var(--f-display);letter-spacing:.08em;text-transform:uppercase;transition:color .2s}
+.tour a:hover span{color:var(--olive-ink)}
+.tour i{display:flex;gap:4px}
+.tour s{width:18px;height:18px;border-radius:50%;display:block}
+.stack{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:clamp(18px,3vw,36px);align-items:start}
+.stack-col{display:flex;flex-direction:column;gap:16px;position:sticky;top:90px}
+.stack-bld{display:flex;flex-direction:column;gap:5px;padding:14px 14px 0;border:1.5px solid var(--ink);border-bottom:0;background:var(--sheet)}
+.lvl{display:grid;grid-template-columns:34px minmax(0,1fr);align-items:center;gap:12px;padding:14px 12px;text-align:left;border:1px solid var(--rule);background:var(--paper);position:relative;transition:transform .3s cubic-bezier(.2,.7,.2,1),border-color .2s,background .2s}
+.lvl::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
+.lvl.k-retail::before{background:var(--olive)} .lvl.k-stock::before{background:var(--mute)} .lvl.k-home::before{background:var(--brick)}
+.lvl b{font:400 18px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.lvl span{font:500 11px/1.35 var(--f-display);letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+.lvl:hover{border-color:var(--ink)}
+.lvl[aria-selected="true"]{background:var(--ink);border-color:var(--ink);transform:translateX(6px)}
+.lvl[aria-selected="true"] b,.lvl[aria-selected="true"] span{color:var(--paper)}
+.stack-ground{height:12px;margin:9px -14px 0;border-top:1.5px solid var(--ink);background:repeating-linear-gradient(-45deg,transparent 0 5px,var(--rule) 5px 6px)}
+.stack-key{display:flex;flex-wrap:wrap;gap:8px 18px;font:500 11px/1 var(--f-display);letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.stack-key span{display:flex;align-items:center;gap:8px}
+.stack-key i{width:12px;height:12px;display:block}
+.stack-key i.k-retail{background:var(--olive)} .stack-key i.k-stock{background:var(--mute)} .stack-key i.k-home{background:var(--brick)}
+.stack-dwg #stName{color:var(--ink)}
+.st-rooms{list-style:none;margin:0;padding:14px 16px 18px;border-top:1px solid var(--rule);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 20px;font-size:14px;color:var(--mute)}
+.st-rooms li{padding-left:16px;position:relative;font-variant-numeric:tabular-nums}
+.st-rooms li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--olive)}
+@media (max-width:900px){.stack{grid-template-columns:1fr}.stack-col{position:static}.lvl[aria-selected="true"]{transform:none}}
+@media (max-width:520px){.st-rooms{grid-template-columns:1fr}}
+/* Drawing viewer */
+.dwg{border:1.5px solid var(--ink);background:var(--sheet)}
+.dwg-tabs{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--rule)}
+.dwg-tabs button{font:500 11px/1 var(--f-display);letter-spacing:.22em;text-transform:uppercase;padding:16px 18px;border-right:1px solid var(--rule);color:var(--mute);transition:all .2s}
+.dwg-tabs button[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+.dwg-stage{position:relative;height:clamp(340px,62vh,640px);overflow:hidden;background:var(--drafting);background-image:linear-gradient(var(--draft-grid) 1px,transparent 1px),linear-gradient(90deg,var(--draft-grid) 1px,transparent 1px);background-size:24px 24px;cursor:zoom-in;display:grid;place-items:center}
+.dwg-stage.zoomed{cursor:grab}
+.dwg-stage img{height:90%;width:auto;max-width:92%;object-fit:contain;transition:transform .45s cubic-bezier(.2,.7,.2,1),opacity .3s;mix-blend-mode:multiply}
+.dwg-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 16px;border-top:1px solid var(--rule);font:500 11px/1.4 var(--f-display);letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.dwg-foot .north{display:flex;align-items:center;gap:10px}
+.dwg-foot svg{width:22px;height:22px}
+
+/* Horizontal interior strip */
+.strip{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:14px;scrollbar-width:thin;margin-right:calc(-1 * var(--gutR))}
+.strip figure{margin:0;flex:0 0 auto;width:min(78vw,520px);scroll-snap-align:start;cursor:zoom-in}
+.strip figure.tall{width:min(56vw,300px)}
+.strip img{width:100%;height:clamp(260px,40vw,380px);object-fit:cover}
+.strip-ctrl{display:flex;justify-content:space-between;align-items:center;gap:16px}
+
+.pv-next{border-top:1px solid var(--rule);padding-block:clamp(48px,7vw,90px) calc(48px + env(safe-area-inset-bottom,0px));position:relative;overflow:hidden}
+.pv-next .wrap{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.pv-next .nm{font:400 clamp(30px,5vw,64px)/1 var(--f-display);letter-spacing:.08em;text-transform:uppercase;margin-top:12px}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--paper);padding:12px 18px;font:500 12px/1 var(--f-display);letter-spacing:.2em;text-transform:uppercase;opacity:0;transition:all .3s;z-index:95;pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+
+</head>
+<body>
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="mark" href="#home" aria-label="iSiri Architecture + Design, home">
+      <span class="w"><span>i</span><span class="s">S</span><span>i</span><span>r</span><span>i</span></span>
+      <span class="t">ARCHITECTURE + DESIGN</span>
+    </a>
+    <nav class="quick" aria-label="Quick links">
+      <a href="#services">Services</a><a href="#projects">Projects</a><a href="#portfolio">Portfolio</a><a href="#studio">Studio</a><a href="#contact">Contact</a>
+    </nav>
+    <button class="menu-btn" id="menuOpen" aria-expanded="false" aria-controls="menu"><span>Menu</span><span class="bars"><i></i><i></i><i></i></span></button>
+  </div>
+</header>
+
+<div class="overlay" id="menu" role="dialog" aria-modal="true" aria-label="Site menu">
+  <div class="pane">
+    <canvas class="contour" data-seed="3"></canvas>
+    <div class="ov-head">
+      <a class="mark" href="#home" data-close><span class="w"><span>i</span><span class="s">S</span><span>i</span><span>r</span><span>i</span></span><span class="t">ARCHITECTURE + DESIGN</span></a>
+      <button class="close" id="menuClose"><span>Close</span><span class="x"></span></button>
+    </div>
+    <div class="levels">
+      <div class="level" data-level="main">
+        <button class="go" data-to="services" data-img="img/res05.jpg" data-cap="Five disciplines, one studio">Services <small>05</small></button>
+        <button class="go" data-to="portfolio" data-img="img/com01.jpg" data-cap="Selected works since 2004">Portfolio <small>06</small></button>
+        <a href="#projects" data-close data-img="img/brick-bloom/render-perspective.jpg" data-cap="Brick Bloom, Rajajinagar">Projects</a>
+        <a href="#studio" data-close data-img="img/studio02.jpg" data-cap="J P Nagar, Bengaluru">Studio</a>
+        <a href="#process" data-close data-img="img/cam01.jpg" data-cap="Four steps, concept to handover">Process</a>
+        <a href="#team" data-close data-img="img/team01.jpg" data-cap="The people behind the drawings">Team</a>
+        <a href="#contact" data-close data-img="img/int01.jpg" data-cap="Tell us about your project">Contact</a>
+      </div>
+      <div class="level sub" data-level="services" aria-hidden="true">
+        <button class="back" data-to="main">← Back</button>
+      </div>
+      <div class="level sub" data-level="portfolio" aria-hidden="true">
+        <button class="back" data-to="main">← Back</button>
+      </div>
+    </div>
+    <div class="ov-foot"><span>+91 98452 63497</span><span>soumyabhat.isiri@gmail.com</span></div>
+  </div>
+  <div class="pane side" aria-hidden="true">
+    <img id="menuImg" src="img/res05.jpg" alt="">
+    <div class="cap" id="menuCap">Five disciplines, one studio</div>
+  </div>
+</div>
+
+<main>
+<section class="hero" id="home" aria-roledescription="carousel" aria-label="Featured work">
+  <canvas class="contour" data-seed="1"></canvas>
+  <div class="wrap">
+    <div class="slides" id="slides"></div>
+    <div class="hero-ctrl">
+      <div class="dots" id="dots" role="tablist" aria-label="Choose a slide"></div>
+      <div class="arrows"><button id="prev" aria-label="Previous slide"><span class="chev"></span></button><button id="next" aria-label="Next slide"><span class="chev n"></span></button></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="studio">
+  <canvas class="contour" data-seed="7"></canvas>
+  <div class="wrap">
+    <div class="studio-grid">
+      <div class="copy">
+        <div class="frame title-wrap"><h2 class="title">Welcome<br>to iSiri</h2></div>
+        <p>iSiri is a <strong>multidisciplinary design practice</strong> founded by <strong>Ar Soumya HR</strong> in <strong>2004</strong>, based in Bengaluru. We approach design as a journey of discovery, matching built spaces closely to the people who use them to create high-quality, responsive and responsible work.</p>
+        <p>Attention to <strong>detail, function, form and balance</strong> defines how we work. By reimagining what a space can do, we create environments for modern living that bring together <strong>sustainability, functionality and aesthetic appeal</strong>.</p>
+        <p class="quote">"Architecture should speak of its time and place, but yearn for timelessness."<cite>Frank Gehry</cite></p>
+      </div>
+      <div>
+        <div class="stats">
+          <div class="stat"><b>2004</b><span>Founded</span></div>
+          <div class="stat"><b data-count="350">350+</b><span>Design projects</span></div>
+          <div class="stat"><b data-count="250">250+</b><span>Projects executed</span></div>
+          <div class="stat"><b>05</b><span>Disciplines</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="studio-pics">
+      <img src="img/studio01.jpg" alt="The iSiri studio entrance with a white stair and lounge seating" loading="lazy">
+      <img src="img/studio02.jpg" alt="The iSiri team seated beneath the studio staircase" loading="lazy">
+      <img src="img/studio03.jpg" alt="The iSiri design office with workstations and patterned wall" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="services">
+  <div class="wrap">
+    <div class="head-row">
+      <div class="frame title-wrap"><h2 class="title">Our<br>Services</h2></div>
+      <p>Every project is unique in <strong>style, design, need and budget</strong>, so each one gets a personal approach, carried by our creative ability and technical expertise from concept through construction.</p>
+    </div>
+    <div class="services" id="svcList"></div>
+  </div>
+</section>
+
+<section class="band" id="process">
+  <canvas class="contour" data-seed="11"></canvas>
+  <div class="wrap">
+    <div class="head-row">
+      <div class="frame title-wrap"><h2 class="title">The<br>Process</h2></div>
+      <p>Our approach to design follows four basic steps, from the first conversation to the day we hand over the keys.</p>
+    </div>
+    <div class="process" id="steps"></div>
+  </div>
+</section>
+
+<section class="band" id="projects">
+  <canvas class="contour" data-seed="9"></canvas>
+  <div class="wrap">
+    <div class="head-row">
+      <div class="frame title-wrap"><h2 class="title">Featured<br>Projects</h2></div>
+      <p>A closer look at individual projects: the brief, the architecture, the drawings and the finished interiors.</p>
+    </div>
+    <div class="plist" id="plist"></div>
+  </div>
+</section>
+
+<section class="band alt" id="portfolio">
+  <div class="wrap">
+    <div class="head-row">
+      <div class="frame title-wrap"><h2 class="title">Selected<br>Works</h2></div>
+      <p>Homes, commercial buildings, campuses, interiors, workplaces and landscapes. Choose a category, then open any image to see it full size.</p>
+    </div>
+    <div class="filters" id="filters" role="group" aria-label="Filter projects"></div>
+    <div class="grid" id="grid"></div>
+    <div class="more"><button class="btn" id="moreBtn">Show more work <span class="arr"></span></button></div>
+  </div>
+</section>
+
+<section class="band" id="founder">
+  <canvas class="contour" data-seed="5"></canvas>
+  <div class="wrap">
+    <div class="founder">
+      <div class="ph"><img src="img/principal.jpg" alt="Ar Soumya HR, principal architect of iSiri" loading="lazy"></div>
+      <div class="copy">
+        <span class="eyebrow">Principal Architect &amp; Founder</span>
+        <h2 class="title">Ar Soumya HR</h2>
+        <p>A graduate of <strong>BVBCET, Hubli</strong>, Soumya began her career with leading architectural firms in Bengaluru. Over more than 20 years she has worked across <strong>architecture, interior design, project management and landscape architecture</strong>.</p>
+        <p>Her interest in experimental techniques and a deep understanding of design aesthetics led her to establish iSiri in 2004. A skilled artist, she brings a strong eye, a close focus on detailing and a commitment to work made for each client.</p>
+        <p class="belief">No space is too small to be designed. Creativity has no size or limits.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="team">
+  <div class="wrap">
+    <div class="head-row" style="margin-bottom:36px">
+      <div class="frame title-wrap"><h2 class="title">Meet<br>the Team</h2></div>
+    </div>
+    <div class="team-intro">
+      <p>At iSiri we blend <strong>innovation, tradition and contemporary design</strong>. Every project reflects the team's commitment to <strong>quality, sustainability and meaningful design</strong>. Our architects work as storytellers, turning a client's vision into buildings that last.</p>
+      <img src="img/team01.jpg" alt="Members of the iSiri team in the studio" loading="lazy">
+    </div>
+    <div class="team" id="teamGrid"></div>
+  </div>
+</section>
+
+<section class="band" id="testimonials">
+  <div class="wrap">
+    <div class="head-row">
+      <div class="frame title-wrap"><h2 class="title">Client<br>Words</h2></div>
+    </div>
+    <div class="testi">
+      <div class="pic"><img src="img/bld02.jpg" alt="Completed residence by iSiri" loading="lazy"></div>
+      <div>
+        <div class="quotes" id="quotes" aria-live="polite"></div>
+        <div class="q-ctrl">
+          <div class="arrows"><button id="qPrev" aria-label="Previous testimonial"><span class="chev"></span></button><button id="qNext" aria-label="Next testimonial"><span class="chev n"></span></button></div>
+          <span class="count" id="qCount">01 / 08</span>
+          <a class="map" href="https://share.google/YvxiYi7ykIug4SGgx" target="_blank" rel="noopener" style="margin-left:auto">Read all reviews on Google ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="prod-band" id="products">
+  <div class="wrap">
+    <div class="prod-head">
+      <div><span class="eyebrow">Product design</span><h2 class="prod-title">Made in the studio</h2></div>
+      <p>Alongside buildings, we design bespoke furniture and hardware, often for the homes we work on.</p>
+    </div>
+    <div class="prod-row" id="prodRow"></div>
+  </div>
+</section>
+
+<section class="band alt" id="contact">
+  <div class="wrap">
+    <div class="head-row">
+      <div class="frame title-wrap"><h2 class="title">Find Us</h2></div>
+      <p>Tell us about your site, your brief and your timeline. We usually reply within two working days.</p>
+    </div>
+    <div class="contact">
+      <div class="info">
+        <div class="row"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.6"/></svg>
+          <div><div class="v">G-14, Oasis Residency, 5th Phase,<br>J P Nagar, Bengaluru,<br>Karnataka 560078</div>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Oasis+Residency+J+P+Nagar+5th+Phase+Bengaluru+560078" target="_blank" rel="noopener">Open in Google Maps ↗</a></div></div>
+        <div class="row"><svg viewBox="0 0 24 24"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2Z"/></svg>
+          <div><div class="v">+91 98452 63497<br>080-4865 2683</div><button class="copy-btn" data-copy="+91 9845263497">Copy mobile number</button></div></div>
+        <div class="row"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3 7 9 6 9-6"/></svg>
+          <div><div class="v lc">soumyabhat.isiri@gmail.com</div><button class="copy-btn" data-copy="soumyabhat.isiri@gmail.com">Copy email</button></div></div>
+        <p class="quote">"Design is where science and art break even."<cite>Mieke Gerritzen</cite></p>
+      </div>
+      <form id="enquiry" name="enquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="enquiry"><p hidden><label>Leave empty<input name="bot-field"></label></p>
+        <label>Name<input id="f-name" name="name" autocomplete="name" required></label>
+        <label>Phone<input id="f-phone" name="phone" type="tel" autocomplete="tel" required></label>
+        <label class="full">Email<input id="f-email" name="email" type="email" autocomplete="email"></label>
+        <label>Project type
+          <select id="f-type" name="type">
+            <option>New home</option><option>Commercial building</option><option>Interior design</option><option>Corporate interiors</option><option>Landscape</option><option>Campus planning</option><option>Product / furniture</option><option>Something else</option>
+          </select></label>
+        <label>Site location<input id="f-loc" name="loc" placeholder="e.g. JP Nagar, Bengaluru"></label>
+        <label class="full">About your project<textarea id="f-msg" name="msg" placeholder="Plot size, number of floors, budget range, when you'd like to start…"></textarea></label>
+        <label class="chk full"><input id="f-ok" name="consent" type="checkbox" value="yes" required> I agree that iSiri may store these details to reply to my enquiry.</label>
+        <div class="full" style="display:flex;align-items:center;gap:18px;flex-wrap:wrap"><button class="btn" type="submit">Send enquiry <span class="arr"></span></button><span class="form-msg" id="formMsg" role="status"></span></div>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="mark" href="#home"><span class="w"><span>i</span><span class="s">S</span><span>i</span><span>r</span><span>i</span></span><span class="t">ARCHITECTURE + DESIGN</span></a>
+    <span class="disc">Architecture | Interiors | Landscape | Product Design</span>
+    <small>© <span id="yr">2026</span> iSiri Architecture + Design · Building dreams since 2004</small>
+  </div>
+</footer>
+
+<div class="pv" id="pv" role="dialog" aria-modal="true" aria-label="Project profile">
+  <div class="pv-bar"><div class="wrap"><span class="crumb">Projects / <b id="pvCrumb"></b></span><button class="close" id="pvClose"><span>All projects</span><span class="x"></span></button></div><div class="pv-prog" id="pvProg"></div></div>
+  <div id="pvContent"></div>
+</div>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Project image viewer">
+  <div class="lb-top"><span id="lbCap">Residential</span><button class="close" id="lbClose"><span>Close</span><span class="x"></span></button></div>
+  <div class="lb-stage" id="lbStage"><img id="lbImg" alt=""></div>
+  <div class="lb-bot"><div class="arrows"><button id="lbPrev" aria-label="Previous image"><span class="chev"></span></button><button id="lbNext" aria-label="Next image"><span class="chev n"></span></button></div><span class="count" id="lbCount"></span></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- Data ---------- */
+const CATS=[
+ {id:'res',name:'Residential',svc:'Architecture',img:'res05',line:'Homes designed to belong, not to impress.',lede:'Clean lines, open volumes, tactile materials and thoughtful planning, shaped around the site, the climate and the family.'},
+ {id:'com',name:'Commercial',svc:'Architecture',img:'com01',line:'Buildings that carry a brand.',lede:'Clean lines, rhythmic compositions and material contrasts that make a strong first impression and work hard every day.'},
+ {id:'cam',name:'Campus',svc:'Planning',img:'cam01',line:'Campuses planned around movement.',lede:'Clear paths for pedestrians, services and vehicles, with green belts and courtyards that bring people together.'},
+ {id:'int',name:'Interiors',svc:'Residential',img:'int01',line:'Rooms shaped by daily life.',lede:'Layouts planned for flow, daylight and cross ventilation, finished in a calm, warm palette of wood, stone and fabric.'},
+ {id:'cor',name:'Corporate',svc:'Interiors',img:'cor01',line:'Workplaces that look good, feel good and work better.',lede:'Offices that reflect a company\'s identity and culture, from receptions and boardrooms to focus pods and breakout zones.'},
+ {id:'lan',name:'Landscape',svc:'Architecture',img:'lan02',line:'Landscape as part of the building.',lede:'Terraces, courtyards and gardens designed around topography, native planting, sun and the way people move.'}
+];
+const W=[];
+const add=(cat,prefix,n,names)=>{for(let i=1;i<=n;i++){const id=prefix+String(i).padStart(2,'0');W.push({cat,src:`img/${id}.jpg`,title:(names&&names[i-1])||null})}};
+add('res','res',16); W.push({cat:'res',src:'img/bld01.jpg'},{cat:'res',src:'img/bld02.jpg'});
+add('com','com',6); add('cam','cam',6); add('int','int',11); add('cor','cor',9); add('lan','lan',5);
+
+// interleave for the "All" view so categories mix
+const mixed=(()=>{const by={};W.forEach(w=>(by[w.cat]=by[w.cat]||[]).push(w));const out=[];let left=true;while(left){left=false;CATS.forEach(c=>{const a=by[c.id];if(a&&a.length){out.push(a.shift());left=true}})}return out})();
+const catName=id=>CATS.find(c=>c.id===id).name;
+
+const SERVICES=[
+ {id:'architecture',name:'Architectural Design and Consultation',tag:'Residential · Commercial',img:'res10',text:'Conceptual design, schematic planning, design development, construction documentation and project administration.'},
+ {id:'pm',name:'Architectural Project Management',tag:'Initiation to handover',img:'res02',text:'Quality outcomes across every phase, from initiation to completion and final handover.'},
+ {id:'interiors',name:'Interior Design Services',tag:'Homes · Workplaces · Turnkey',img:'cor03',text:'People-centric spaces that support well-being, brand identity and technology. We also deliver complete turnkey interior projects.'},
+ {id:'landscape',name:'Landscape Design Services',tag:'Terraces · Courtyards · Campuses',img:'lan03',text:'Planning, design and sustainability that improve both human and environmental well-being.'},
+ {id:'product',name:'Product Design',tag:'Bespoke furniture',img:'pro04',text:'Designing products is as exciting as architecture. Custom pieces add a smart, personal touch to each project.'}
+];
+const STEPS=[
+ ['Understanding the requirement','We listen first: how you live or work, your site, your budget and what you want the place to feel like.'],
+ ['Detailed design development','Plans, sections, materials and 3D views are developed and refined with you until every space is resolved.'],
+ ['Design meets engineering','The design is integrated with structural and services engineering so it can be built well and economically.'],
+ ['Supervision and execution','We supervise the site and manage execution efficiently, through to completion and handover.']
+];
+const TEAM=['Soumya','Deepthi','Nanditha','Sai Darshan','Himashree','Sundaresh','Manasa','Bhaargav','Rohan','Poornima','Taskin','Samarth','Darshan'];
+const QUOTES=[
+ ['Smitha Madhu','Delivery Manager, Infosys','Soumya took the time to understand my needs, expectations and aspirations for the new kitchen through multiple site visits. Her thoughtful design approach turned those ideas into a beautiful and highly functional space, with convenience as the top priority.'],
+ ['Ganesh Pai','Founder, Finnsights Consulting','Remodelling our home with iSiri was an amazing experience. Every room balances elegance and comfort, making daily life easier and more enjoyable. We highly recommend iSiri for their creativity, care and expertise.'],
+ ['Anand Rajdendran','Senior International Faculty, The Art of Living','Choosing Soumya ji as our architect was the best decision. Her design skills, attention to detail and dedication made the entire process smooth and reassuring. Even a year later, we\'re still in awe of the thoughtful execution.'],
+ ['Vishal Desai','Supply Chain Program Manager, Cisco Systems','Their end-to-end service, from design to execution, was seamless and tailored to our needs. We\'re extremely happy with our duplex at Royal Meadows and highly recommend iSiri for quality, style and reliability.'],
+ ['Sachin Herwade','Senior Manager, Société Générale','It was a smooth and wonderful journey throughout. The interior design and execution were creative, sensitive and highly professional. I can\'t stop recommending you to friends and family.'],
+ ['Anand Swaminathan','SVP and Global Delivery Leader, Infogain','With our busy schedules, we needed someone dependable, and Sowmya ji handled everything effortlessly. Despite limited site visits, the result is a minimalistic, elegant home that fits us perfectly.'],
+ ['Manjunath KA','Principal Engineer, Infineon Technologies','Architect Soumya designed my house with excellent space utilization and handled everything from planning to interiors seamlessly: architecture, structure, material selection and finishes. A beautifully executed home, inside and out.'],
+ ['Sujatha Neelakannan','Data Scientist, Fidelity Investments','Soumya and her team did a wonderful job with design and execution throughout. Her patience and ability to work through challenges is one of her key strengths. I would strongly recommend Soumya and iSiri.']
+];
+
+/* ---------- Contour ground (marching squares over a smooth field) ---------- */
+function drawContours(cv){
+  const r=cv.getBoundingClientRect(); if(!r.width||!r.height) return;
+  const dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=r.width*dpr; cv.height=r.height*dpr;
+  const ctx=cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,r.width,r.height);
+  const seed=+cv.dataset.seed||1, cs=getComputedStyle(document.documentElement);
+  ctx.strokeStyle=cs.getPropertyValue('--contour').trim()||'rgba(0,0,0,.08)'; ctx.lineWidth=1;
+  const f=(x,y)=>{x/=260;y/=260;return Math.sin(x*1.3+seed)+Math.sin(y*1.1-seed*.7)+.8*Math.sin((x+y)*.9+seed*1.9)+.6*Math.sin(Math.hypot(x-2.2,y-1.4)*2.1-seed)+.35*Math.sin(x*2.7-y*1.9+seed*3)};
+  const step=14, cols=Math.ceil(r.width/step)+1, rows=Math.ceil(r.height/step)+1, g=new Float32Array(cols*rows);
+  for(let j=0;j<rows;j++)for(let i=0;i<cols;i++)g[j*cols+i]=f(i*step,j*step);
+  ctx.beginPath();
+  for(let lv=-3;lv<=3;lv+=.22){
+    for(let j=0;j<rows-1;j++)for(let i=0;i<cols-1;i++){
+      const a=g[j*cols+i],b=g[j*cols+i+1],c=g[(j+1)*cols+i+1],d=g[(j+1)*cols+i];
+      const idx=(a>lv)|((b>lv)<<1)|((c>lv)<<2)|((d>lv)<<3); if(idx===0||idx===15) continue;
+      const x=i*step,y=j*step,t=(p,q)=>(lv-p)/(q-p);
+      const T=[x+step*t(a,b),y], R=[x+step,y+step*t(b,c)], B=[x+step*t(d,c),y+step], L=[x,y+step*t(a,d)];
+      const seg=(p,q)=>{ctx.moveTo(p[0],p[1]);ctx.lineTo(q[0],q[1])};
+      switch(idx){case 1:case 14:seg(L,T);break;case 2:case 13:seg(T,R);break;case 3:case 12:seg(L,R);break;case 4:case 11:seg(R,B);break;case 6:case 9:seg(T,B);break;case 7:case 8:seg(L,B);break;case 5:seg(L,T);seg(R,B);break;case 10:seg(T,R);seg(L,B);break}
+    }
+  }
+  ctx.stroke();
+}
+const drawAll=()=>$$('canvas.contour').forEach(drawContours);
+let rz; addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(drawAll,150)});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',drawAll);
+new MutationObserver(drawAll).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+
+/* ---------- Hero slider ---------- */
+const slidesEl=$('#slides'), dotsEl=$('#dots');
+CATS.forEach((c,i)=>{
+  const s=document.createElement('article'); s.className='slide'+(i===0?' on':''); s.setAttribute('aria-roledescription','slide'); s.setAttribute('aria-label',`${i+1} of ${CATS.length}: ${c.name}`);
+  const H=i===0?'h1':'h2';
+  s.innerHTML=`<div class="txt"><span class="eyebrow">${c.name} ${c.svc}</span><div class="frame"><${H} class="h1">${c.line}</${H}></div><p class="lede">${c.lede}</p><a class="btn" href="#portfolio" data-filter="${c.id}">View ${c.name.toLowerCase()} work <span class="arr"></span></a></div><div class="pic" data-tag="${c.name}"><img src="img/${c.img}.jpg" alt="${c.name} project by iSiri" ${i?'loading="lazy"':''}></div>`;
+  slidesEl.appendChild(s);
+  const d=document.createElement('button'); d.setAttribute('role','tab'); d.innerHTML=`<span>${c.name}</span>`; d.setAttribute('aria-label',c.name); d.setAttribute('aria-current',i===0); d.onclick=()=>{go(i);restart()}; dotsEl.appendChild(d);
+});
+let cur=0, timer;
+function go(n){const s=$$('.slide'),d=$$('#dots button');cur=(n+s.length)%s.length;s.forEach((e,i)=>e.classList.toggle('on',i===cur));d.forEach((e,i)=>e.setAttribute('aria-current',i===cur))}
+function restart(){clearInterval(timer);if(!reduce)timer=setInterval(()=>go(cur+1),6500)}
+$('#prev').onclick=()=>{go(cur-1);restart()}; $('#next').onclick=()=>{go(cur+1);restart()};
+const hero=$('#home'); hero.addEventListener('mouseenter',()=>clearInterval(timer)); hero.addEventListener('mouseleave',restart);
+let sx=null; hero.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+hero.addEventListener('touchend',e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>50){go(cur+(dx<0?1:-1));restart()}sx=null});
+restart();
+
+/* ---------- Services & process ---------- */
+$('#svcList').innerHTML=SERVICES.map(s=>`<div class="svc" id="svc-${s.id}"><div><span class="tag">${s.tag}</span><h3>${s.name}</h3></div><p>${s.text}</p><img src="img/${s.img}.jpg" alt="" loading="lazy"></div>`).join('');
+const massing=k=>{const blocks=[[0,0],[1,0],[0,1],[1,1]];let out='';const pos=[[[6,18],[22,18],[6,30],[22,30]],[[4,22],[22,14],[8,32],[26,30]],[[2,24],[24,10],[10,34],[30,26]],[[2,26],[26,6],[14,34],[34,22]]][k];pos.forEach((p,i)=>{out+=`<rect x="${p[0]}" y="${p[1]}" width="16" height="10" fill="${k>1&&i%2?'var(--olive)':'none'}" stroke="var(--ink)" stroke-width="1.2" opacity="${k>1&&i%2?.75:1}"/>`});return `<svg class="massing" viewBox="0 0 60 46" preserveAspectRatio="xMinYMid meet" aria-hidden="true">${out}</svg>`};
+$('#steps').innerHTML=STEPS.map((s,i)=>`<div class="step"><div class="n">${i+1}</div>${massing(i)}<h3>${s[0]}</h3><p>${s[1]}</p></div>`).join('');
+
+/* ---------- Portfolio ---------- */
+let filter='all', shown=12; const gridEl=$('#grid'), filtersEl=$('#filters'), moreBtn=$('#moreBtn');
+const list=()=>filter==='all'?mixed:W.filter(w=>w.cat===filter);
+filtersEl.innerHTML=[`<button data-f="all" aria-pressed="true">All<sup>${W.length}</sup></button>`].concat(CATS.map(c=>`<button data-f="${c.id}" aria-pressed="false">${c.name}<sup>${W.filter(w=>w.cat===c.id).length}</sup></button>`)).join('');
+function renderGrid(){
+  const L=list(); gridEl.innerHTML=L.slice(0,shown).map((w,i)=>`<button class="tile" data-i="${i}"><img src="${w.src}" alt="${w.title||catName(w.cat)+' project'} by iSiri" loading="lazy"><span class="lbl">${w.title||catName(w.cat)}</span></button>`).join('');
+  moreBtn.parentElement.hidden=shown>=L.length;
+}
+function setFilter(f,scroll){filter=f;shown=12;$$('#filters button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.f===f));renderGrid();if(scroll)$('#portfolio').scrollIntoView({behavior:reduce?'auto':'smooth'})}
+filtersEl.addEventListener('click',e=>{const b=e.target.closest('button');if(b)setFilter(b.dataset.f)});
+moreBtn.onclick=()=>{shown+=12;renderGrid()};
+gridEl.addEventListener('click',e=>{const t=e.target.closest('.tile');if(t)openLb(+t.dataset.i)});
+document.addEventListener('click',e=>{const a=e.target.closest('[data-filter]');if(a){e.preventDefault();setFilter(a.dataset.filter,true)}});
+renderGrid();
+
+/* ---------- Lightbox ---------- */
+const lb=$('#lb'); let li=0, lastFocus, lbList=[];
+function showLb(){const L=lbList,w=L[li];$('#lbImg').src=w.src;$('#lbImg').alt=(w.cap||w.title||catName(w.cat))+' by iSiri';$('#lbCap').textContent=w.cap||(w.title?`${catName(w.cat)} · ${w.title}`:catName(w.cat));$('#lbCount').textContent=`${String(li+1).padStart(2,'0')} / ${String(L.length).padStart(2,'0')}`}
+function openLb(i,arr){lbList=arr||list();li=i;lastFocus=document.activeElement;showLb();lb.classList.add('open');document.body.style.overflow='hidden';$('#lbClose').focus()}
+function closeLb(){lb.classList.remove('open');if(!pv.classList.contains('open'))document.body.style.overflow='';lastFocus&&lastFocus.focus()}
+const lbStep=d=>{const n=lbList.length;li=(li+d+n)%n;showLb()};
+$('#lbClose').onclick=closeLb; $('#lbPrev').onclick=()=>lbStep(-1); $('#lbNext').onclick=()=>lbStep(1);
+$('#lbStage').addEventListener('click',e=>{if(e.target.id==='lbStage')closeLb()});
+let lx=null; lb.addEventListener('touchstart',e=>lx=e.touches[0].clientX,{passive:true});
+lb.addEventListener('touchend',e=>{if(lx===null)return;const dx=e.changedTouches[0].clientX-lx;if(Math.abs(dx)>50)lbStep(dx<0?1:-1);lx=null});
+
+/* ---------- Layered menu ---------- */
+const menu=$('#menu'), levels={};
+$$('.level').forEach(l=>levels[l.dataset.level]=l);
+levels.services.insertAdjacentHTML('beforeend',SERVICES.map(s=>`<a href="${s.id==='product'?'#products':'#svc-'+s.id}" data-close data-svc="${s.id}" data-img="img/${s.img}.jpg" data-cap="${s.tag}">${s.name.replace(' Services','').replace('Architectural Design and Consultation','Architecture')}</a>`).join(''));
+levels.portfolio.insertAdjacentHTML('beforeend',[`<a href="#portfolio" data-close data-filter="all" data-img="img/res01.jpg" data-cap="Every category">All work <small>${W.length}</small></a>`].concat(CATS.map(c=>`<a href="#portfolio" data-close data-filter="${c.id}" data-img="img/${c.img}.jpg" data-cap="${c.line}">${c.name} <small>${W.filter(w=>w.cat===c.id).length}</small></a>`)).join(''));
+function showLevel(name){Object.entries(levels).forEach(([k,l])=>{const on=k===name;l.setAttribute('aria-hidden',!on);l.classList.toggle('behind',!on&&k==='main');l.inert=!on});const f=levels[name].querySelector('a,button');f&&f.focus()}
+function openMenu(){menu.classList.add('open');$('#menuOpen').setAttribute('aria-expanded','true');document.body.style.overflow='hidden';showLevel('main');drawContours(menu.querySelector('canvas'))}
+function closeMenu(){menu.classList.remove('open');$('#menuOpen').setAttribute('aria-expanded','false');document.body.style.overflow='';$('#menuOpen').focus()}
+$('#menuOpen').onclick=openMenu; $('#menuClose').onclick=closeMenu;
+menu.addEventListener('click',e=>{
+  const go=e.target.closest('[data-to]'); if(go){showLevel(go.dataset.to);return}
+  const c=e.target.closest('[data-close]'); if(c){closeMenu(); if(c.dataset.svc){const el=$('#svc-'+c.dataset.svc);el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1800)}}
+});
+menu.addEventListener('mouseover',e=>{const a=e.target.closest('[data-img]');if(!a)return;const im=$('#menuImg');if(im.getAttribute('src')!==a.dataset.img){im.style.opacity=0;setTimeout(()=>{im.src=a.dataset.img;im.style.opacity=.92},180)}$('#menuCap').textContent=a.dataset.cap});
+
+/* ---------- Products (secondary shelf) ---------- */
+const PRODUCTS=[
+ ['frame','Frame Side Console','A bold cuboid shelf held inside a strong rectilinear frame.',['#E8DDEB','#8E7F7A']],
+ ['wheel','The Wheel Table','A minimalist table that stands on a unicycle wheel.',['#B5ACA7','#937553','#536E7F']],
+ ['cane','Cane Console','A wooden frame with cane weave panels and glass ends.',['#6B4832','#816921','#D1B98D']],
+ ['linear','The Linear Display','Stone-look and fluted panels on a slim steel stand.',['#73727A','#BDB7B7','#958176']],
+ ['popbox','Popbox','A plywood chest of drawers in colourful fluted laminates.',['#6C95A9','#BF9B9B','#776058']],
+ ['stria','Stria Console','Concrete-look storage with fluted blue and ivory strips.',['#73727A','#BDB7B7','#6C95A9']],
+ ['sleek','Sleek Display Console','A muted beige console made as a backdrop for art.',['#663612','#937553','#FCEBD1']],
+ ['tree-handle','Brass Tree Handle','A handcrafted solid-brass door pull shaped like a branch.',['#6B4832','#987535']]
+];
+const prodGallery=PRODUCTS.map(p=>({src:`img/products/${p[0]}.jpg`,cap:`Product · ${p[1]}`}));
+$('#prodRow').innerHTML=PRODUCTS.map((p,i)=>`<button class="prod" data-pi="${i}"><span class="pimg"><img src="img/products/${p[0]}.jpg" alt="${p[1]}" loading="lazy"></span><span class="pnm">${p[1]}</span><span class="pds">${p[2]}</span><span class="psw">${p[3].map(c=>`<i style="background:${c}"></i>`).join('')}</span></button>`).join('');
+$('#prodRow').addEventListener('click',e=>{const b=e.target.closest('.prod');if(b)openLb(+b.dataset.pi,prodGallery)});
+
+/* ---------- Team ---------- */
+$('#teamGrid').innerHTML=TEAM.map(n=>`<div class="member"><img src="img/p_${n.toLowerCase().replace(' ','_')}.jpg" alt="${n}" loading="lazy"><span>${n}</span></div>`).join('');
+
+/* ---------- Testimonials ---------- */
+const qEl=$('#quotes'); let qi=0, qt;
+qEl.innerHTML=QUOTES.map((q,i)=>`<figure class="q${i?'':' on'}" style="margin:0"><span class="stars" aria-label="5 out of 5">★★★★★</span><blockquote>${q[2]}</blockquote><figcaption class="who"><b>${q[0]}</b><span>${q[1]}</span></figcaption></figure>`).join('');
+function qGo(n){const q=$$('.q');qi=(n+q.length)%q.length;q.forEach((e,i)=>e.classList.toggle('on',i===qi));$('#qCount').textContent=`${String(qi+1).padStart(2,'0')} / ${String(q.length).padStart(2,'0')}`}
+const qRestart=()=>{clearInterval(qt);if(!reduce)qt=setInterval(()=>qGo(qi+1),8000)};
+$('#qPrev').onclick=()=>{qGo(qi-1);qRestart()}; $('#qNext').onclick=()=>{qGo(qi+1);qRestart()}; qRestart();
+
+/* ---------- Contact ---------- */
+const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)};
+$$('[data-copy]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.copy;try{navigator.clipboard.writeText(v).then(()=>toast('Copied'),()=>sel(b))}catch(e){sel(b)}}));
+function sel(b){const v=b.previousElementSibling;const r=document.createRange();r.selectNodeContents(v);const s=getSelection();s.removeAllRanges();s.addRange(r);toast('Selected — press copy')}
+$('#enquiry').addEventListener('submit',e=>{
+  e.preventDefault(); const m=$('#formMsg'); m.classList.remove('err');
+  const name=$('#f-name').value.trim(), phone=$('#f-phone').value.trim();
+  if(!name||!phone){m.textContent='Please add your name and phone number so we can reach you.';m.classList.add('err');return}
+  if(!$('#f-ok').checked){m.textContent='Please tick the consent box to send your enquiry.';m.classList.add('err');return}
+  const f=e.target, btn=f.querySelector('button[type=submit]'); btn.disabled=true; m.textContent='Sending…';
+  fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(f)).toString()})
+   .then(r=>{if(!r.ok)throw 0;m.textContent=`Thanks, ${name.split(' ')[0]}. Your enquiry has reached the studio. We'll be in touch within two working days.`;f.reset()})
+   .catch(()=>{m.textContent='Your enquiry could not be sent. Please call +91 98452 63497 or email soumyabhat.isiri@gmail.com.';m.classList.add('err')})
+   .finally(()=>{btn.disabled=false});
+});
+
+/* ---------- Project profiles ----------
+   To add a project: copy the Brindavanam object, change the text, and point the images at img/<project-id>/. */
+const PROJECTS=[
+ {id:'brick-bloom', name:'Brick Bloom', type:'Residential', scope:'Architecture, Interiors & Project Administration', year:'2022', location:'Rajajinagar, Bengaluru', area:'6,662 sq ft', floors:'Basement + G + 2',
+  dir:'img/brick-bloom/', cover:'render-front.jpg', thumb:'render-perspective.jpg', coverRatio:'4/3',
+  lede:'A brick residence that celebrates texture, craft and honest materials.',
+  overview:[
+   'Exposed brickwork is the house\'s central language, joining timeless materials with a contemporary design approach.',
+   'The facade plays with depth through projected and recessed brick patterns, casting rhythmic shadows that shift through the day. The patterns do more than decorate: they shade the walls, help with passive cooling and tell the story of the material.'
+  ],
+  architecture:{
+   blocks:[
+    {img:'render-perspective.jpg',cap:'Street perspective, design render',text:['Brick jaali screens wrap the upper floors, filtering light and breeze while keeping the rooms private from the street.','Deep window frames in exposed concrete punch through the brick, giving each opening its own shadow line.']}
+   ],
+   details:{
+    items:[{img:'detail-jaali.jpg',cap:'Jaali screen by the window'},{img:'detail-stair.jpg',cap:'Brick-backed staircase'},{img:'detail-brick.jpg',cap:'Corbelled brick pattern'}],
+    text:['The design takes cues from sustainable, locally rooted architecture, using locally sourced bricks and lime-based mortar for breathability and longevity.','Framed windows and jaali details improve ventilation while preserving the home\'s character. What brings the house to life is close attention to proportion and the rhythm of the brick module.']
+   },
+   extra:[
+    {img:'stair2.jpg',cap:'Staircase and textured wall',flip:true,text:['Inside, the exposed brick continues as a unifying backdrop, wrapping the staircase and living areas.','Warm terracotta against polished surfaces and modern fixtures makes a striking balance. Light and shadow play across the textured walls, turning everyday movement through the house into an experience.']}
+   ],
+   pull:'An inner courtyard adds a quiet pause in the plan, filtering light into the rooms around it, with dry landscapes and planters built into the form.'
+  },
+  drawings:[
+   {img:'plan-basement.jpg',label:'Basement',note:'Parking for four cars and two-wheelers, store, handwash and lift'},
+   {img:'plan-ground.jpg',label:'Ground floor',note:'Foyer, living, dining, baitak area, kitchen, pooja, dry indoor garden and parents\' bedroom'},
+   {img:'plan-first.jpg',label:'First floor',note:'Master bedroom, two kids\' bedrooms with bay windows and seaters, foyer and balconies'},
+   {img:'plan-second.jpg',label:'Second floor',note:'Library, home office, family lounge, living room, kitchen, master and guest bedrooms'},
+   {img:'section-aa.jpg',label:'Section A–A',note:'Stair core, lift and double-height space from basement to terrace'},
+   {img:'section-bb.jpg',label:'Section B–B',note:'Floor levels from basement (−3\'0") to terrace roof'}
+  ],
+  interiors:{
+   intro:['The interiors are warm, simple and quietly elegant. A material-conscious approach balances modern function with earthy charm.','Exposed brick walls run through the rooms as a common thread, adding character, texture and a sense of timelessness.'],
+   feature:{img:'living.jpg',cap:'Living room',text:['Warm wood runs through the furniture, floors and doors, giving visual continuity and a tactile richness to the whole home.','The living spaces are airy and well lit, with soft floor lamps and daylight filtering through sheer drapes.']},
+   pull:'Every space should breathe, and every material should speak. This home does both.',
+   strip:[
+    {img:'seating.jpg',cap:'Living room seating'},
+    {img:'stair1.jpg',cap:'Staircase and brick wall'},
+    {img:'kids1.jpg',cap:'Daughter\'s bedroom'},
+    {img:'kids2.jpg',cap:'Study corner'},
+    {img:'master.jpg',cap:'Bedroom with brick feature wall'},
+    {img:'window-seat.jpg',cap:'Window seat and bookshelves'}
+   ],
+   notes:[
+    ['Planning','Each room is designed around its users\' daily habits, from calm pastel bedrooms to a bold teal-accented kitchen.'],
+    ['Storage','Storage is built into the furniture, and window seats turn everyday corners into places to pause.'],
+    ['Custom details','Carved wooden doors, metal jaali patterns and brass accents reflect the family\'s culture in a contemporary way.'],
+    ['Materials','Material honesty, handcrafted details and natural textures make the home feel grounded and personal.']
+   ]
+  }
+ },
+ {id:'brindavanam', name:'Brindavanam', type:'Residential', scope:'Architecture & Interior Design', year:'2021', location:'Kanakapura, Bengaluru', area:'5,600 sq ft', floors:'G + 2', plot:'Corner plot',
+  dir:'img/brindavanam/', cover:'exterior.jpg', thumb:'exterior.jpg',
+  lede:'A contemporary home set within nature, rethinking how architecture meets the tropical city landscape.',
+  overview:[
+   'Brindavanam is a bold yet calm sculptural form. Clean lines, a restrained material palette and an open plan let light and life move freely through the house.',
+   'The design balances privacy with openness through carefully placed voids, staggered windows and warm wooden textures that soften the modern geometry.'
+  ],
+  architecture:{
+   blocks:[
+    {img:'street.jpg',cap:'Street edge, built',text:['White plastered masses frame bands of wooden cladding, giving rhythm and warmth to the vertical and horizontal planes.','A green wrap of coconut palms, potted plants and flowering gardens softens the line between the built and the natural, so the home breathes with its surroundings.']},
+    {img:'render-corner.jpg',cap:'Corner view, design render',flip:true,text:['Set on a corner plot, the house engages with both street edges while keeping a calm, inward-looking interior.','Each elevation faces a different direction and tells its own story, yet the facades read together as one composition.']},
+    {img:'render-terrace.jpg',cap:'Rooftop terrace, design render',text:['A rooftop terrace lined with glass balustrades and planting crowns the building with a floating garden for rest and retreat.','Inside, rooms flow with natural light and cross ventilation. The minimal approach puts function, climate and comfort first.']}
+   ],
+   pull:'Every element is intentional, a gesture toward comfort, clarity and longevity.'
+  },
+  drawings:[
+   {img:'plan-ground.jpg',label:'Ground floor',note:'Parking, living, pooja, kitchen, dining, guest bedroom, around the central courtyard'},
+   {img:'plan-first.jpg',label:'First floor',note:'Family lounge, meditation room, family study, master and daughter\'s bedrooms over the courtyard'},
+   {img:'plan-second.jpg',label:'Second floor',note:'Terrace bedroom, pantry and the open rooftop garden'},
+   {img:'section-aa.jpg',label:'Section A–A',note:'Double-height courtyard and stair linking all three floors'},
+   {img:'section-bb.jpg',label:'Section B–B',note:'Floor-to-floor relationships across the width of the house'}
+  ],
+  interiors:{
+   intro:['The interiors blend contemporary design with traditional Indian sensibilities, giving a home that is warm, inviting and rooted in its context.','Planning stays open and fluid, moving easily between public and semi-private zones while keeping one calm visual language throughout.'],
+   feature:{img:'courtyard.jpg',cap:'Internal courtyard',text:['The internal courtyard, planted and surrounded by double-height volumes, is the spine of the house. It anchors circulation and brings nature directly into daily life.','Exposed stone pillars and a suspended wooden swing recall vernacular traditions, layered into a modern framework.']},
+   pull:'Polished stone floors, warm wood finishes and muted walls lend an understated elegance.',
+   strip:[
+    {img:'swing.jpg',cap:'Courtyard swing and stone pillars'},
+    {img:'living.jpg',cap:'Upper living with cut-work ceiling'},
+    {img:'tv-wall.jpg',cap:'Living room and pooja doors'},
+    {img:'kitchen.jpg',cap:'Kitchen'},
+    {img:'lounge.jpg',cap:'Family lounge and study'},
+    {img:'study.jpg',cap:'Study with built-in library'},
+    {img:'wardrobe1.jpg',cap:'Dressing area',tall:true},
+    {img:'wardrobe2.jpg',cap:'Bedroom wardrobes',tall:true}
+   ],
+   notes:[
+    ['Materials','Wooden laminates, fluted panels, stone-textured tiles and fabric panels add depth without overwhelming the senses.'],
+    ['Joinery','Clean-lined cabinetry, sleek kitchen modules and custom wardrobes blend into the architecture.'],
+    ['Pooja room','Detailed wooden doors and patterned glass create a moment of calm and cultural continuity.'],
+    ['Lighting','Light is built into ceilings and joinery, balancing ambient and task lighting.']
+   ]
+  }
+ },
+ {id:'streaked-house', name:'Streaked House', type:'Residential', scope:'Architecture & Interior Design', year:'2021', location:'Vijayanagar, Bengaluru', area:'7,650 sq ft', floors:'G + 3',
+  dir:'img/streaked-house/', cover:'street-front.jpg', thumb:'front-elevation.jpg', coverRatio:'10/11',
+  lede:'A home whose barcode-like facade sets it apart from the street around it.',
+  overview:[
+   'The house brings together elegance, comfort and function. The lower level holds a well-planned 1BHK and a dedicated office, while the floors above rise into a generous three-storey family home.',
+   'Skylights and carefully placed openings bring in daylight and fresh air, reducing the need for artificial lighting and air conditioning. Around the staircase and pooja area, a pebble pathway and planting blur the line between inside and outside.'
+  ],
+  architecture:{
+   blocks:[
+    {img:'facade-detail.jpg',cap:'Barcode facade, built',text:['Long vertical rafters run up the facade and give the house its character.','Because each rafter is a different width, together they read like a barcode, a streaked pattern that gives the house its name.']},
+    {img:'front-elevation.jpg',cap:'Front elevation, design render',flip:true,text:['White masses, timber-toned panels and the vertical rafters are layered at different depths, so the front changes as you walk past it.','A pergola and terrace planting soften the upper floors, and the 1BHK and office at street level each have their own entrance.']},
+    {img:'street-corner.jpg',cap:'Street view, built',text:['Stone cladding at the base grounds the house, while a perforated screen marks the entrance.','Each space is planned to feel open and refined, with light and ventilation guiding where every window sits.']}
+   ],
+   pull:'Inside and outside meet around the staircase and pooja area, along a pebble pathway lined with greenery.'
+  },
+  drawings:[
+   {img:'plan-ground.jpg',label:'Ground floor',note:'Parking for four cars, the 1BHK unit and a dedicated office'},
+   {img:'plan-first.jpg',label:'First floor',note:'Living, dining and kitchen around a planted pebble court beside the staircase'},
+   {img:'plan-second.jpg',label:'Second floor',note:'Master and guest bedrooms with attached baths around a planted void'},
+   {img:'plan-third.jpg',label:'Third floor',note:'Son\'s bedroom, AV and gym lounge, deck and open terrace'},
+   {img:'section.jpg',label:'Section',note:'The lift core and stair link the office level to the AV and gym room at the top'},
+   {img:'elevation.jpg',label:'Elevation',note:'Front elevation showing the varying widths of the barcode rafters'}
+  ],
+  interiors:{
+   intro:['The interiors are minimal and refined, balancing function with beauty. A contemporary approach keeps them warm and comfortable.','Textures, materials and planning work together for a timeless result, and clean lines and uncluttered forms make the rooms feel inviting yet well ordered.'],
+   feature:{img:'living-hero.jpg',cap:'Double-height living room',text:['A double-height living room is the heart of the house, with a slatted screen and a light wall rising to the floor above.','Every corner aims for calm and sophistication, through tactile materials and spaces that flow easily into one another.']},
+   pull:'Natural wood, polished surfaces and muted tones add up to understated luxury.',
+   strip:[
+    {img:'living-long.jpg',cap:'Living room toward the entrance'},
+    {img:'tv-stair.jpg',cap:'Media wall, stair and lift'},
+    {img:'light-wall.jpg',cap:'Cross-light feature wall',tall:true},
+    {img:'upper-lounge.jpg',cap:'Upper lounge over the double height'},
+    {img:'gym.jpg',cap:'AV and gym room'},
+    {img:'terrace.jpg',cap:'Pergola terrace'}
+   ],
+   notes:[
+    ['Experience','Comfort, elegance and practicality are balanced in every room to make daily life easier.'],
+    ['Materials','Natural wood, polished surfaces and muted colours create quiet luxury.'],
+    ['Joinery','Bespoke furniture and cabinetry maximise storage while keeping surfaces clean.'],
+    ['Lighting','Natural and artificial light are mixed to change the mood through the day.']
+   ]
+  }
+ },
+ {id:'gr-lavender', name:'GR Lavender', mode:'rooms', type:'Residential interiors', scope:'Interior Design & Build', year:'2006', location:'JP Nagar, Bengaluru', area:'1,750 sq ft', floorsLabel:'Unit', floors:'3 BHK model flat',
+  dir:'img/gr-lavender/', cover:'living2.jpg', thumb:'master1.jpg', coverRatio:'11/10', keyplan:'kp-foyer.jpg',
+  lede:'A model flat where each room has its own palette and character, from a pebbled foyer to a bubble-filled kids\' room.',
+  overview:['Designed and built as the show flat for GR Lavender, this 1,750 sq ft home is a tour of six rooms, each with its own palette, materials and mood.','Follow the key plan as you scroll: it highlights the room you are reading about, starting at the front door.'],
+  rooms:[
+   {id:'foyer',name:'Foyer',kp:'kp-foyer.jpg',photos:['foyer2.jpg','foyer1.jpg','foyer3.jpg'],palette:['#6E2F10','#9F8E72','#ABA99C','#CEC4BB'],
+    text:'The foyer is a grand yet welcoming first step into the home. A stone-clad water feature, pebble beds and warm wood frames make it beautiful and practical for everyday use.',
+    notes:[['Statement entrance','A designed console and artwork at the entry add character and depth.'],['Warm palette','Earthy tones, warm lighting and subtle textures make it inviting.'],['Mirrors','Carefully placed mirrors make the foyer feel larger and brighter.']]},
+   {id:'living',name:'Living & Dining',kp:'kp-living.jpg',photos:['living1.jpg','living2.jpg','dining.jpg'],palette:['#7A281C','#B89A5A','#C6AE8C','#B7ABAF'],
+    text:'The living and dining space is warm, elegant and open. Earthy tones, natural textures and refined finishes give it a contemporary, inviting feel.',
+    notes:[['Dry landscaping','Pebbles and planting bring natural elements inside.'],['Spatial flow','An open plan connects living and dining seamlessly.'],['Lighting','Warm cove and pendant lighting keep it cosy yet modern.']]},
+   {id:'kitchen',name:'Kitchen',kp:'kp-kitchen.jpg',photos:['kitchen1.jpg','kitchen2.jpg','kitchen3.jpg'],palette:['#8E9E9D','#AFBEB7','#C8CDC9','#A6B1B7'],
+    text:'The kitchen balances function and good looks. Clean lines, an efficient layout and high-end finishes make cooking easy, and a cool sage palette makes the room feel larger.',
+    notes:[['Efficient layout','An ergonomic work triangle keeps movement short and easy.'],['Materials','Sleek cabinets, durable black countertops and easy-clean surfaces.'],['Fixtures','Integrated appliances, soft-close drawers and a tiled backsplash.']]},
+   {id:'master',name:'Master Bedroom',kp:'kp-master.jpg',photos:['master1.jpg','master2.jpg','master3.jpg'],palette:['#884D15','#B69E58','#A5915C','#FF8901'],
+    text:'The master bedroom breaks away from rectilinear layouts. A sweeping curved headboard canopy and circular elements give the room a sense of movement and a distinctive edge.',
+    notes:[['Spatial flow','The layout is planned for openness and a feeling of space.'],['Curved forms','Soft, organic shapes run through the joinery and furniture.'],['Warm palette','Neutral and terracotta tones make the room cosy and inviting.']]},
+   {id:'kids',name:'Kids\' Room',kp:'kp-kids.jpg',photos:['kids1.jpg','kids2.jpg','kids3.jpg','kids4.jpg'],palette:['#A9B970','#89B0C1','#BFA5D5','#CEC4BB'],
+    text:'The kids\' room is energetic and full of colour, built to encourage creativity and play. Pastel greens, blues and lilacs combine with circles and bubble cut-outs that capture the spirit of childhood.',
+    notes:[['Playful colour','Pastel shades with bright accents keep the room cheerful.'],['Shapes','Circular cut-outs and bubble motifs spark curiosity and imagination.'],['Child-friendly','Soft edges, durable finishes and ergonomic furniture keep it safe.']]},
+   {id:'guest',name:'Guest Bedroom',kp:'kp-guest.jpg',photos:['guest1.jpg','guest2.jpg','guest3.jpg'],palette:['#0B3A54','#AB803C','#EDB82E','#CEC4BB'],
+    text:'Earthy tones and soft blues make the guest bedroom calm and refined. Layered textures, patterns and blue roses add charm, so guests feel comfortable and welcome.',
+    notes:[['Floral accents','Blue roses add a touch of refined charm.'],['Materials','Soft fabrics and natural finishes, with a glowing floating bed base.'],['Lighting','Soft ambient light and blue pendants create a restful mood.']]}
+  ]
+ },
+ {id:'elevate', name:'Elevate', mode:'stack', type:'Commercial', scope:'Architecture, Interiors & Project Administration', year:'2025', location:'Jayanagar, Bengaluru', area:'5,476 sq ft', floors:'G + 5',
+  dir:'img/elevate/', cover:'elevation.jpg', thumb:'perspective.jpg', coverRatio:'1050/880',
+  lede:'A hardware hub that stacks a shop, its stock and the owner\'s home on one tight city plot.',
+  overview:[
+   'Set among the busy streets of Jayanagar, Elevate is a commercial building for a leading wholesale hardware supplier, designed around flexibility, growth and function.',
+   'It answers the crowded urban fabric boldly while staying contemporary and contextual. Each floor can serve the owner or be leased to others, and the planning follows Vastu principles for harmony and balance.'
+  ],
+  architecture:{
+   blocks:[
+    {img:'elevation.jpg',cap:'Street elevation, design render',text:['A tall glass shopfront opens the ground and first floors to the street, while brick jaali panels and framed concrete boxes climb the upper floors.','Planters tucked into the facade grids and timber fins at the top soften the building against its dense surroundings.']},
+    {img:'perspective.jpg',cap:'Corner perspective, design render',flip:true,text:['The site shaped the design. In a busy urban setting, the plan handles goods smoothly, so stock moves efficiently from the street to the storage floors through a dedicated goods lift.','Security is built into every level, letting the owner keep a close eye on materials coming in and going out.']}
+   ],
+   pull:'Efficient, secure and ready to grow: a building designed as a symbol of the business behind it.'
+  },
+  stackIntro:'Select a floor to see its plan. Retail sits at street level, stock fills the middle, and the owner lives at the top with a terrace garden. Click a plan to zoom in.',
+  kindNames:{home:'Residence',stock:'Storage',retail:'Retail'},
+  floors:[
+   {lvl:'05',name:'Fifth floor',use:'Home office & terrace',kind:'home',img:'plan-5.jpg',rooms:['Terrace garden 18\'11" × 15\'7"','Home office 7\'11" × 10\'7"','Servant\'s room 11\'10" × 15\'3"','Spiral stair from the residence below','Ladder to the roof terrace']},
+   {lvl:'04',name:'Fourth floor',use:'Owner\'s residence',kind:'home',img:'plan-4.jpg',rooms:['Living room 10\'5" × 11\'10"','Dining 5\'7" × 12\'10"','Kitchen 7\'3" × 12\'9" with deck','Master bedroom 11\'4" × 11\'6"','Bedroom 10\'0" × 11\'9"','Pooja and two toilets']},
+   {lvl:'03',name:'Third floor',use:'Stocking',kind:'stock',img:'plan-2.jpg',rooms:['Stocking hall 18\'11" × 26\'8"','Stocking bay 20\'8" × 9\'10"','Goods lift beside the passenger lift','Same plan as the second floor']},
+   {lvl:'02',name:'Second floor',use:'Stocking',kind:'stock',img:'plan-2.jpg',rooms:['Stocking hall 18\'11" × 26\'8"','Stocking bay 20\'8" × 9\'10"','Goods lift beside the passenger lift','Toilet']},
+   {lvl:'01',name:'First floor',use:'Main display & customers',kind:'retail',img:'plan-1.jpg',rooms:['Main display and customer area 18\'11" × 12\'7"','Seating for customers','Overlooks the owner\'s space and order desk below','Goods lift, lift and toilet']},
+   {lvl:'G',name:'Ground floor',use:'Store, display & order desk',kind:'retail',img:'plan-g.jpg',rooms:['Display area 18\'11" × 12\'7"','High-density stocking area 20\'8" × 9\'10"','Owner\'s space and display 10\'8" × 11\'7"','Order checking 8\'5" × 7\'7"','Separate store and pedestrian entries']}
+  ]
+ },
+ {id:'venkatagiri', name:'Venkatagiri', type:'Residential', scope:'Architecture & Interior Design', year:'2023', location:'Akshayanagar, Bengaluru', area:'3,000 sq ft', floors:'G + 1, terrace',
+  dir:'img/venkatagiri/', cover:'exterior-dusk.jpg', thumb:'exterior-day.jpg', coverRatio:'1/1',
+  lede:'"Modern Nest", a contemporary city home that brings together function, elegance and climate-conscious design.',
+  overview:[
+   'The project is about contemporary living through framed openness, where clear spaces and easy flow sit side by side.',
+   'Every room feels connected yet distinct, meeting the modern need for privacy without isolation. With crisp geometry and balanced massing, the house speaks a language that is both minimal and bold.'
+  ],
+  architecture:{
+   blocks:[
+    {img:'exterior-day.jpg',cap:'West-facing street front, built',text:['The elevation plays with solids and voids. Projecting and recessed volumes catch light and shadow differently through the day.','Warm wooden cladding, ribbed vertical screening and earthy plaster finishes bring a tactile quality to an otherwise modern form.']}
+   ],
+   details:{
+    items:[{img:'detail-door.jpg',cap:'Main door in sandstone'},{img:'detail-jaali.jpg',cap:'Terracotta jaali'},{img:'detail-pooja.jpg',cap:'Carved pooja door'},{img:'detail-window.jpg',cap:'Jaali light well'}],
+    text:['Materials do much of the work here. Sandstone cladding acts as a passive thermal buffer, keeping the rooms cooler while giving the exterior an earthy texture.','Fluted panels add refinement and rhythm, giving the surfaces depth and a play of light.']
+   },
+   extra:[
+    {img:'balcony.jpg',cap:'Pergola balcony',flip:true,text:['A white pergola shades the upper balcony, throwing a moving grid of shadow over the patterned floor tiles.','Wood-grain cladding and grilled French doors connect the master bedroom to its deck.']}
+   ],
+   pull:'Every space is crafted to feel connected, yet distinctly its own.'
+  },
+  drawings:[
+   {img:'plan-ground.jpg',label:'Ground floor',note:'Parking, foyer, living, dining, kitchen, utility, pooja and Bedroom 1 off the west side road'},
+   {img:'plan-first.jpg',label:'First floor',note:'Family lounge over the living-room void, son\'s and daughter\'s bedrooms, master bedroom with two decks'},
+   {img:'section.jpg',label:'Section',note:'Stair through three levels, from ground (±0\'0") to the terrace roof (+32\'6")'}
+  ],
+  interiors:{
+   intro:['The interiors blend modern sensibilities with rooted Indian aesthetics, offering both function and warmth.','Clean lines, muted tones and carefully chosen textures bring calm and cohesion. From the moment you step in, natural wood and earthy finishes set the tone.'],
+   feature:{img:'living.jpg',cap:'Living room and pooja',text:['The layout flows easily from one space to the next, open without losing privacy or definition.','Sunlight through the jaali scatters patterns across the floor, and the carved pooja door anchors the room in tradition.']},
+   pull:'Integrated storage and sleek surfaces keep the home clutter-free, so each panel, light and object stands out clearly.',
+   strip:[
+    {img:'kitchen.jpg',cap:'Kitchen with cove-lit counter'},
+    {img:'skylight.jpg',cap:'Skylight and cascading pendants',tall:true},
+    {img:'lounge.jpg',cap:'Upper lounge and geometric ceiling'},
+    {img:'stair.jpg',cap:'Staircase from above',tall:true},
+    {img:'bedroom.jpg',cap:'Bedroom with fluted headboard'}
+   ],
+   notes:[
+    ['Furniture','Custom-made pieces improve utility while keeping the design minimal and elegant.'],
+    ['Storage','Integrated storage and sleek surfaces keep every room clutter-free.'],
+    ['Light','A skylight over the stair and a patterned ceiling cut-out fill the core with daylight.'],
+    ['Materials','Natural wood, stone-look tiles and earthy finishes give calm and cohesion.']
+   ]
+  }
+ }
+];
+const UPCOMING=['Project 07'];
+const pv=$('#pv'), pvC=$('#pvContent');
+$('#plist').innerHTML=PROJECTS.map((p,i)=>`<button class="prow" data-proj="${p.id}"><span class="no">${String(i+1).padStart(2,'0')}</span><span class="nm">${p.name}</span><span class="meta"><span>${p.type} · ${p.year}</span><span>${p.location}</span><span>${p.area}</span></span><span class="th"><img src="${p.dir+p.thumb}" alt="${p.name}" loading="lazy"></span></button>`).join('')
+ + UPCOMING.map((u,i)=>`<div class="prow soon" aria-hidden="true"><span class="no">${String(PROJECTS.length+i+1).padStart(2,'0')}</span><span class="nm">${u}</span><span class="meta"><span>Coming soon</span></span><span></span></div>`).join('');
+document.addEventListener('click',e=>{const b=e.target.closest('[data-proj]');if(b){e.preventDefault();openPv(b.dataset.proj)}});
+
+const north='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M12 4 15 15 12 13 9 15Z" fill="currentColor"/></svg>';
+function coverHtml(p,idx){
+  const im=f=>p.dir+f;
+  return `<header class="pv-cover"><canvas class="contour" data-seed="${13+idx*4}"></canvas><div class="wrap">
+    <div>
+      <span class="pv-kick"><i></i>Project ${String(idx+1).padStart(2,'0')} · ${p.type}</span>
+      <h1 class="pv-name">${(()=>{let k=0;return p.name.split(' ').map(w=>`<span class="wd">${[...w].map(c=>`<span style="transition-delay:${.25+(k++)*.05}s">${c}</span>`).join('')}</span>`).join(' ')})()}</h1>
+      <p class="pv-lede">${p.lede}</p>
+      <dl class="tblock">
+        <div><dt>Project</dt><dd>${p.name}</dd></div><div><dt>Completed</dt><dd>${p.year}</dd></div><div><dt>Built area</dt><dd>${p.area}</dd></div>
+        <div><dt>Location</dt><dd>${p.location}</dd></div><div><dt>${p.floorsLabel||'Floors'}</dt><dd>${p.floors}</dd></div><div><dt>Scope</dt><dd>${p.scope}</dd></div>
+      </dl>
+    </div>
+    <div class="pv-hero"${p.coverRatio?` style="aspect-ratio:${p.coverRatio}"`:''}><img src="${im(p.cover)}" alt="${p.name}"></div>
+  </div></header>`;
+}
+function nextHtml(p){
+  const idx=PROJECTS.indexOf(p), next=PROJECTS[(idx+1)%PROJECTS.length];
+  return `<footer class="pv-next"><canvas class="contour" data-seed="17"></canvas><div class="wrap">
+    <div><span class="eyebrow">Next project</span><div class="nm">${next.name}</div></div>
+    <button class="btn" data-proj="${next.id}">Open project <span class="arr"></span></button></div></footer>`;
+}
+function renderRooms(p){
+  const im=f=>p.dir+f, idx=PROJECTS.indexOf(p);
+  const gallery=[]; p.rooms.forEach(r=>r.photos.forEach(f=>gallery.push({src:im(f),cap:`${p.name} · ${r.name}`})));
+  const gi=src=>gallery.findIndex(g=>g.src===src);
+  pvC.innerHTML=coverHtml(p,idx)+`
+  <div class="wrap pv-body">
+    <aside class="chapters rooms-nav" aria-label="Rooms">
+      <a href="#ch-overview" class="on" data-kp="${p.keyplan}"><b>00</b>Overview</a>
+      ${p.rooms.map((r,i)=>`<a href="#rm-${r.id}" data-kp="${r.kp}"><b>${String(i+1).padStart(2,'0')}</b>${r.name}</a>`).join('')}
+      <figure class="kp"><img id="kpImg" src="${im(p.keyplan)}" alt="Key plan of the apartment"><figcaption class="cap-s">Key plan · <span id="kpName">Whole flat</span></figcaption></figure>
+    </aside>
+    <div>
+      <section class="chap" id="ch-overview" data-kp="${p.keyplan}" data-name="Whole flat"><div class="chap-h"><b>00</b><h2>Overview</h2></div>
+        <div class="prose rv">${p.overview.map(t=>`<p>${t}</p>`).join('')}</div>
+        <ol class="tour rv">${p.rooms.map((r,i)=>`<li><a href="#rm-${r.id}"><b>${String(i+1).padStart(2,'0')}</b><span>${r.name}</span><i>${r.palette.map(c=>`<s style="background:${c}"></s>`).join('')}</i></a></li>`).join('')}</ol>
+      </section>
+      ${p.rooms.map((r,i)=>`
+      <section class="chap" id="rm-${r.id}" data-kp="${r.kp}" data-name="${r.name}"><div class="chap-h"><b>${String(i+1).padStart(2,'0')}</b><h2>${r.name}</h2></div>
+        <div class="duo rv${i%2?' flip':''}">
+          <figure class="ph" style="margin:0" data-g="${gi(im(r.photos[0]))}"><img src="${im(r.photos[0])}" alt="${r.name}" loading="lazy"></figure>
+          <div class="prose"><p>${r.text}</p>
+            <div class="chips" aria-label="${r.name} colour palette">${r.palette.map((c,k)=>`<div class="chip"><span style="background:${c}"></span><code>${c}</code></div>`).join('')}</div>
+          </div>
+        </div>
+        <div class="room-pics rv n${r.photos.length-1}">${r.photos.slice(1).map(f=>`<figure class="ph" data-g="${gi(im(f))}"><img src="${im(f)}" alt="${r.name}" loading="lazy"></figure>`).join('')}</div>
+        <div class="services rv">${r.notes.map(n=>`<div class="svc" style="grid-template-columns:minmax(0,3fr) minmax(0,7fr)"><h3>${n[0]}</h3><p>${n[1]}</p></div>`).join('')}</div>
+      </section>`).join('')}
+    </div>
+  </div>`+nextHtml(p);
+  pvC.querySelectorAll('[data-g]').forEach(el=>el.addEventListener('click',()=>openLb(+el.dataset.g,gallery)));
+  pvC.querySelectorAll('.chapters a,.tour a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();pvC.querySelector(a.getAttribute('href')).scrollIntoView({behavior:reduce?'auto':'smooth'})}));
+}
+function syncKeyplan(sec){
+  const k=$('#kpImg'); if(!k||!sec||!sec.dataset.kp) return;
+  const src=currentPv.dir+sec.dataset.kp;
+  if(k.getAttribute('src')!==src){k.style.opacity=.2;setTimeout(()=>{k.src=src;k.style.opacity=1},160)}
+  $('#kpName').textContent=sec.dataset.name;
+}
+
+function renderStack(p){
+  const im=f=>p.dir+f, idx=PROJECTS.indexOf(p), A=p.architecture;
+  const gallery=[{src:im(p.cover),cap:p.name+' · Elevation'}].concat(A.blocks.map(b=>({src:im(b.img),cap:p.name+' · '+b.cap})));
+  const uniq=[]; gallery.forEach(g=>{if(!uniq.some(u=>u.src===g.src))uniq.push(g)});
+  const gi=src=>uniq.findIndex(g=>g.src===src);
+  const kinds=[...new Set(p.floors.map(f=>f.kind))];
+  pvC.innerHTML=coverHtml(p,idx)+`
+  <div class="wrap pv-body">
+    <nav class="chapters" aria-label="Project chapters">
+      <a href="#ch-overview" class="on"><b>01</b>Overview</a><a href="#ch-architecture"><b>02</b>Architecture</a><a href="#ch-stack"><b>03</b>Floor by floor</a>
+    </nav>
+    <div>
+      <section class="chap" id="ch-overview"><div class="chap-h"><b>01</b><h2>Overview</h2></div>
+        <div class="prose rv">${p.overview.map(t=>`<p>${t}</p>`).join('')}</div>
+      </section>
+      <section class="chap" id="ch-architecture"><div class="chap-h"><b>02</b><h2>Architecture</h2></div>
+        ${A.blocks.map(b=>`<div class="duo rv${b.flip?' flip':''}"><figure class="ph" style="margin:0" data-g="${gi(im(b.img))}"><img src="${im(b.img)}" alt="${b.cap}" loading="lazy"><figcaption class="cap-s">${b.cap}</figcaption></figure><div class="prose">${b.text.map(t=>`<p>${t}</p>`).join('')}</div></div>`).join('')}
+        <p class="pull rv">${A.pull}</p>
+      </section>
+      <section class="chap" id="ch-stack"><div class="chap-h"><b>03</b><h2>Floor by floor</h2></div>
+        <div class="prose rv"><p>${p.stackIntro}</p></div>
+        <div class="stack rv">
+          <div class="stack-col">
+            <div class="stack-bld" role="tablist" aria-label="Choose a floor">
+              ${p.floors.map((f,k)=>`<button role="tab" class="lvl k-${f.kind}" aria-selected="${k===p.floors.length-1}" data-f="${k}"><b>${f.lvl}</b><span>${f.use}</span></button>`).join('')}
+              <div class="stack-ground" aria-hidden="true"></div>
+            </div>
+            <div class="stack-key">${kinds.map(k=>`<span><i class="k-${k}"></i>${p.kindNames[k]}</span>`).join('')}</div>
+          </div>
+          <div class="dwg stack-dwg">
+            <div class="dwg-foot" style="border-top:0;border-bottom:1px solid var(--rule)"><span id="stName"></span><span id="stUse"></span></div>
+            <div class="dwg-stage" id="stStage" title="Click to zoom"><img id="stImg" alt=""></div>
+            <ul class="st-rooms" id="stRooms"></ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>`+nextHtml(p);
+  pvC.querySelectorAll('[data-g]').forEach(el=>el.addEventListener('click',()=>openLb(+el.dataset.g,uniq)));
+  pvC.querySelectorAll('.chapters a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();pvC.querySelector(a.getAttribute('href')).scrollIntoView({behavior:reduce?'auto':'smooth'})}));
+  const st=$('#stStage'), si=$('#stImg'); let z=false;
+  const unzoom=()=>{z=false;st.classList.remove('zoomed');si.style.transform=''};
+  function pick(k,first){
+    const f=p.floors[k];
+    pvC.querySelectorAll('.lvl').forEach(b=>b.setAttribute('aria-selected',+b.dataset.f===k));
+    unzoom(); si.style.opacity=first?1:0;
+    setTimeout(()=>{si.src=im(f.img);si.alt=f.name+' plan';si.style.opacity=1},first?0:180);
+    $('#stName').textContent=f.name; $('#stUse').textContent=f.use;
+    $('#stRooms').innerHTML=f.rooms.map(r=>`<li>${r}</li>`).join('');
+  }
+  pvC.querySelectorAll('.lvl').forEach(b=>b.addEventListener('click',()=>pick(+b.dataset.f)));
+  const pan=e=>{const r=st.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;si.style.transform=`scale(2.4) translate(${-x*55}%,${-y*55}%)`};
+  st.addEventListener('click',e=>{z=!z;st.classList.toggle('zoomed',z);z?pan(e):unzoom()});
+  st.addEventListener('mousemove',e=>{if(z)pan(e)}); st.addEventListener('mouseleave',unzoom);
+  pick(p.floors.length-1,true);
+}
+
+function renderPv(p){
+  if(p.mode==='rooms'){renderRooms(p);return}
+  if(p.mode==='stack'){renderStack(p);return}
+  const im=f=>p.dir+f, A=p.architecture, I=p.interiors;
+  const blocks2=A.extra||[], det=A.details?A.details.items:[];
+  const gallery=[{src:im(p.cover),cap:p.name+' · Exterior'}].concat(A.blocks.map(b=>({src:im(b.img),cap:p.name+' · '+b.cap})),det.map(b=>({src:im(b.img),cap:p.name+' · '+b.cap})),blocks2.map(b=>({src:im(b.img),cap:p.name+' · '+b.cap})),[{src:im(I.feature.img),cap:p.name+' · '+I.feature.cap}],I.strip.map(s=>({src:im(s.img),cap:p.name+' · '+s.cap})));
+  const gi=src=>gallery.findIndex(g=>g.src===src);
+  const idx=PROJECTS.indexOf(p), next=PROJECTS[(idx+1)%PROJECTS.length];
+  pvC.innerHTML=`
+  <header class="pv-cover"><canvas class="contour" data-seed="13"></canvas><div class="wrap">
+    <div>
+      <span class="pv-kick"><i></i>Project ${String(idx+1).padStart(2,'0')} · ${p.type}</span>
+      <h1 class="pv-name">${(()=>{let k=0;return p.name.split(' ').map(w=>`<span class="wd">${[...w].map(c=>`<span style="transition-delay:${.25+(k++)*.05}s">${c}</span>`).join('')}</span>`).join(' ')})()}</h1>
+      <p class="pv-lede">${p.lede}</p>
+      <dl class="tblock">
+        <div><dt>Project</dt><dd>${p.name}</dd></div><div><dt>Completed</dt><dd>${p.year}</dd></div><div><dt>Built area</dt><dd>${p.area}</dd></div>
+        <div><dt>Location</dt><dd>${p.location}</dd></div><div><dt>Floors</dt><dd>${p.floors}</dd></div><div><dt>Scope</dt><dd>${p.scope}</dd></div>
+      </dl>
+    </div>
+    <div class="pv-hero"${p.coverRatio?` style="aspect-ratio:${p.coverRatio}"`:''}><img src="${im(p.cover)}" alt="${p.name}, exterior"></div>
+  </div></header>
+  <div class="wrap pv-body">
+    <nav class="chapters" aria-label="Project chapters">
+      <a href="#ch-overview" class="on"><b>01</b>Overview</a><a href="#ch-architecture"><b>02</b>Architecture</a><a href="#ch-drawings"><b>03</b>Drawings</a><a href="#ch-interiors"><b>04</b>Interiors</a>
+    </nav>
+    <div>
+      <section class="chap" id="ch-overview"><div class="chap-h"><b>01</b><h2>Overview</h2></div>
+        <div class="prose rv">${p.overview.map(t=>`<p>${t}</p>`).join('')}</div>
+      </section>
+      <section class="chap" id="ch-architecture"><div class="chap-h"><b>02</b><h2>Architecture</h2></div>
+        ${A.blocks.map(b=>`<div class="duo rv${b.flip?' flip':''}"><figure class="ph" style="margin:0" data-g="${gi(im(b.img))}"><img src="${im(b.img)}" alt="${b.cap}" loading="lazy"><figcaption class="cap-s">${b.cap}</figcaption></figure><div class="prose">${b.text.map(t=>`<p>${t}</p>`).join('')}</div></div>`).join('')}
+        ${A.details?`<div class="trip rv n${det.length}">${det.map(d=>`<figure class="ph" data-g="${gi(im(d.img))}"><img src="${im(d.img)}" alt="${d.cap}" loading="lazy"><figcaption class="cap-s">${d.cap}</figcaption></figure>`).join('')}</div><div class="prose rv">${A.details.text.map(t=>`<p>${t}</p>`).join('')}</div>`:''}
+        ${blocks2.map(b=>`<div class="duo rv${b.flip?' flip':''}"><figure class="ph" style="margin:0" data-g="${gi(im(b.img))}"><img src="${im(b.img)}" alt="${b.cap}" loading="lazy"><figcaption class="cap-s">${b.cap}</figcaption></figure><div class="prose">${b.text.map(t=>`<p>${t}</p>`).join('')}</div></div>`).join('')}
+        <p class="pull rv">${A.pull}</p>
+      </section>
+      <section class="chap" id="ch-drawings"><div class="chap-h"><b>03</b><h2>Drawings</h2></div>
+        <div class="dwg rv">
+          <div class="dwg-tabs" role="tablist">${p.drawings.map((d,k)=>`<button role="tab" aria-selected="${k===0}" data-d="${k}">${d.label}</button>`).join('')}</div>
+          <div class="dwg-stage" id="dwgStage" title="Click to zoom"><img id="dwgImg" src="${im(p.drawings[0].img)}" alt="${p.drawings[0].label}"></div>
+          <div class="dwg-foot"><span id="dwgNote">${p.drawings[0].note}</span><span class="north">${north}Click drawing to zoom</span></div>
+        </div>
+      </section>
+      <section class="chap" id="ch-interiors"><div class="chap-h"><b>04</b><h2>Interiors</h2></div>
+        <div class="prose rv">${I.intro.map(t=>`<p>${t}</p>`).join('')}</div>
+        <div class="duo flip rv"><figure class="ph" style="margin:0" data-g="${gi(im(I.feature.img))}"><img src="${im(I.feature.img)}" alt="${I.feature.cap}" loading="lazy"><figcaption class="cap-s">${I.feature.cap}</figcaption></figure><div class="prose">${I.feature.text.map(t=>`<p>${t}</p>`).join('')}</div></div>
+        <p class="pull rv">${I.pull}</p>
+        <div class="rv">
+          <div class="strip" id="strip">${I.strip.map(s=>`<figure class="${s.tall?'tall':''}" data-g="${gi(im(s.img))}"><img src="${im(s.img)}" alt="${s.cap}" loading="lazy"><figcaption class="cap-s">${s.cap}</figcaption></figure>`).join('')}</div>
+          <div class="strip-ctrl"><span class="cap-s" style="margin:0">Scroll or swipe through the rooms</span><div class="arrows"><button id="sPrev" aria-label="Scroll back"><span class="chev"></span></button><button id="sNext" aria-label="Scroll forward"><span class="chev n"></span></button></div></div>
+        </div>
+        <div class="services rv" style="margin-top:8px">${I.notes.map(n=>`<div class="svc" style="grid-template-columns:minmax(0,3fr) minmax(0,7fr)"><h3>${n[0]}</h3><p>${n[1]}</p></div>`).join('')}</div>
+      </section>
+    </div>
+  </div>
+  <footer class="pv-next"><canvas class="contour" data-seed="17"></canvas><div class="wrap">
+    <div><span class="eyebrow">${PROJECTS.length>1?'Next project':'More projects coming soon'}</span><div class="nm">${PROJECTS.length>1?next.name:'Selected works'}</div></div>
+    ${PROJECTS.length>1?`<button class="btn" data-proj="${next.id}">Open project <span class="arr"></span></button>`:`<button class="btn" id="pvToWorks">Browse all work <span class="arr"></span></button>`}
+  </div></footer>`;
+
+  // gallery clicks
+  pvC.querySelectorAll('[data-g]').forEach(el=>el.addEventListener('click',()=>openLb(+el.dataset.g,gallery)));
+  // drawings
+  const st=$('#dwgStage'), di=$('#dwgImg'); let z=false;
+  const unzoom=()=>{z=false;st.classList.remove('zoomed');di.style.transform=''};
+  pvC.querySelectorAll('.dwg-tabs button').forEach(b=>b.onclick=()=>{const d=p.drawings[+b.dataset.d];pvC.querySelectorAll('.dwg-tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));unzoom();di.style.opacity=0;setTimeout(()=>{di.src=im(d.img);di.alt=d.label;$('#dwgNote').textContent=d.note;di.style.opacity=1},200)});
+  const pan=e=>{const r=st.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;di.style.transform=`scale(2.4) translate(${-x*55}%,${-y*55}%)`};
+  st.addEventListener('click',e=>{z=!z;st.classList.toggle('zoomed',z);z?pan(e):unzoom()});
+  st.addEventListener('mousemove',e=>{if(z)pan(e)});
+  st.addEventListener('mouseleave',unzoom);
+  // strip
+  const sp=$('#strip'); $('#sPrev').onclick=()=>sp.scrollBy({left:-sp.clientWidth*.8,behavior:'smooth'}); $('#sNext').onclick=()=>sp.scrollBy({left:sp.clientWidth*.8,behavior:'smooth'});
+  const tw=$('#pvToWorks'); if(tw) tw.onclick=()=>{closePv();$('#portfolio').scrollIntoView()};
+  // chapter links scroll inside the view
+  pvC.querySelectorAll('.chapters a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();pvC.querySelector(a.getAttribute('href')).scrollIntoView({behavior:reduce?'auto':'smooth'})}));
+}
+let pvObs, currentPv=null;
+function openPv(id){
+  const p=PROJECTS.find(x=>x.id===id); if(!p) return;
+  if(menu.classList.contains('open')) closeMenu();
+  currentPv=p; renderPv(p); $('#pvCrumb').textContent=p.name; pv.scrollTop=0;
+  lastFocus=document.activeElement; document.body.style.overflow='hidden';
+  requestAnimationFrame(()=>{pv.classList.add('open');pv.querySelectorAll('canvas.contour').forEach(drawContours);$('#pvClose').focus()});
+  // reveal-on-scroll, only for things below the first screen
+  if(pvObs) pvObs.disconnect();
+  if(!reduce && 'IntersectionObserver' in window){
+    pvObs=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.remove('pre');pvObs.unobserve(en.target)}}),{root:pv,rootMargin:'0px 0px -8% 0px'});
+    pv.querySelectorAll('.rv').forEach(el=>{if(el.getBoundingClientRect().top>innerHeight){el.classList.add('pre');pvObs.observe(el)}});
+  }
+}
+function closePv(){pv.classList.remove('open');document.body.style.overflow='';const t=$('#projects');lastFocus&&lastFocus.focus&&lastFocus.focus()}
+$('#pvClose').onclick=closePv;
+pv.addEventListener('scroll',()=>{
+  const max=pv.scrollHeight-pv.clientHeight; $('#pvProg').style.width=(max>0?pv.scrollTop/max*100:0)+'%';
+  const secs=[...pvC.querySelectorAll('.chap')]; let on=secs[0];
+  secs.forEach(s=>{if(s.getBoundingClientRect().top<innerHeight*.4)on=s});
+  pvC.querySelectorAll('.chapters a').forEach(a=>a.classList.toggle('on',on&&a.getAttribute('href')==='#'+on.id));
+  if(currentPv&&currentPv.mode==='rooms') syncKeyplan(on);
+},{passive:true});
+
+/* ---------- Header & misc ---------- */
+const top=$('header.top'); addEventListener('scroll',()=>top.classList.toggle('scrolled',scrollY>10),{passive:true});
+document.addEventListener('keydown',e=>{
+  if(lb.classList.contains('open')){if(e.key==='Escape')closeLb();if(e.key==='ArrowRight')lbStep(1);if(e.key==='ArrowLeft')lbStep(-1);return}
+  if(menu.classList.contains('open')&&e.key==='Escape'){closeMenu();return}
+  if(pv.classList.contains('open')&&e.key==='Escape'){closePv();return}
+});
+$('#yr').textContent=new Date().getFullYear();
+const startHash=location.hash.slice(1); if(CATS.some(c=>c.id===startHash)){setFilter(startHash,true)} else if(PROJECTS.some(p=>p.id===startHash)){openPv(startHash)}
+drawAll(); if(document.fonts)document.fonts.ready.then(drawAll);
+})();
+</script>
+
+</body>
+</html>
